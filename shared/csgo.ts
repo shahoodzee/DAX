@@ -1,0 +1,38 @@
+export const CSGO_WEAPONS = {
+  "AK-47": "AK-47",
+  AWP: "AWP",
+  "M4A4": "M4A4",
+  "M4A1-S": "M4A1-S",
+  "Desert Eagle": "Desert Eagle",
+  "Glock-18": "Glock-18",
+  "USP-S": "USP-S",
+  "P250": "P250",
+  FAMAS: "FAMAS",
+  "Galil AR": "Galil AR",
+  AUG: "AUG",
+  "SG 553": "SG 553",
+  MP9: "MP9",
+  MP7: "MP7",
+  "UMP-45": "UMP-45",
+  P90: "P90",
+  "PP-Bizon": "PP-Bizon",
+  "MAC-10": "MAC-10",
+  "MP5-SD": "MP5-SD",
+  Nova: "Nova",
+  XM1014: "XM1014",
+  "MAG-7": "MAG-7",
+  "Sawed-Off": "Sawed-Off",
+  "SSG 08": "SSG 08",
+  G3SG1: "G3SG1",
+  "SCAR-20": "SCAR-20",
+  M249: "M249",
+  Negev: "Negev",
+  Karambit: "Karambit",
+  Bayonet: "Bayonet",
+  "M9 Bayonet": "M9 Bayonet",
+  "Butterfly Knife": "Butterfly Knife",
+} as const;
+
+export type CsgoWeapon = (typeof CSGO_WEAPONS)[keyof typeof CSGO_WEAPONS];
+
+
