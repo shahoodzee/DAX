@@ -80,8 +80,8 @@ export default function Login() {
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <Button type="button" variant="outline" disabled={loading} onClick={() => onSSO("google")}> 
-              <Google /> Google
+            <Button type="button" variant="outline" disabled={loading} onClick={() => onSSO("google")}>
+              <Chrome /> Google
             </Button>
             <Button type="button" variant="outline" disabled={loading} onClick={() => onSSO("github")}>
               <Github /> GitHub
