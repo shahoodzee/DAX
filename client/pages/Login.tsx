@@ -29,43 +29,31 @@ export default function Login() {
     }
   };
 
-  const onSSO = async (provider: "google" | "github") => {
-    setLoading(true);
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-        },
-      });
-      if (error) throw error;
-    } catch (err: any) {
-      toast({ title: "SSO error", description: err.message, variant: "destructive" });
-      setLoading(false);
-    }
+  const onSSO = (provider: "google" | "github" | "sso") => {
+    toast({ title: "Coming soon", description: `${provider.toUpperCase()} sign-in will be available shortly.` });
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-background to-muted">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-gray-900 via-gray-800 to-valorant-dark text-white">
+      <Card className="w-full max-w-md bg-gray-900/60 border-gray-700">
         <CardHeader>
-          <CardTitle>Sign in</CardTitle>
-          <CardDescription>Access your account with email or single sign-on.</CardDescription>
+          <CardTitle className="text-white">Sign in</CardTitle>
+          <CardDescription className="text-gray-400">Access your account with email or single sign-on.</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={onLogin} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
-                <Input id="email" type="email" required placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} className="pl-10" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                <Input id="email" type="email" required placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} className="pl-10 bg-gray-800 border-gray-600 text-white placeholder:text-gray-400" />
               </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
-                <Input id="password" type="password" required placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} className="pl-10" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                <Input id="password" type="password" required placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} className="pl-10 bg-gray-800 border-gray-600 text-white placeholder:text-gray-400" />
               </div>
             </div>
             <Button type="submit" disabled={loading} className="w-full">
@@ -73,24 +61,27 @@ export default function Login() {
             </Button>
           </form>
 
-          <div className="my-6 flex items-center gap-2 text-xs text-muted-foreground">
-            <div className="h-px flex-1 bg-border" />
+          <div className="my-6 flex items-center gap-2 text-xs text-gray-400">
+            <div className="h-px flex-1 bg-gray-700" />
             <span>OR CONTINUE WITH</span>
-            <div className="h-px flex-1 bg-border" />
+            <div className="h-px flex-1 bg-gray-700" />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <Button type="button" variant="outline" disabled={loading} onClick={() => onSSO("google")}>
+          <div className="grid grid-cols-3 gap-3">
+            <Button type="button" variant="outline" onClick={() => onSSO("google")} className="border-gray-700 text-white bg-gray-800 hover:bg-gray-700">
               <Chrome /> Google
             </Button>
-            <Button type="button" variant="outline" disabled={loading} onClick={() => onSSO("github")}>
+            <Button type="button" variant="outline" onClick={() => onSSO("github")} className="border-gray-700 text-white bg-gray-800 hover:bg-gray-700">
               <Github /> GitHub
+            </Button>
+            <Button type="button" variant="outline" onClick={() => onSSO("sso")} className="border-gray-700 text-white bg-gray-800 hover:bg-gray-700">
+              SSO
             </Button>
           </div>
         </CardContent>
         <CardFooter className="justify-center">
-          <p className="text-sm text-muted-foreground">
-            Don't have an account? <Link to="/sign-up" className="text-primary underline-offset-4 hover:underline">Sign up</Link>
+          <p className="text-sm text-gray-400">
+            Don't have an account? <Link to="/sign-up" className="text-valorant-cyan underline-offset-4 hover:underline">Sign up</Link>
           </p>
         </CardFooter>
       </Card>
