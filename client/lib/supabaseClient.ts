@@ -31,9 +31,7 @@ export const supabase = {
     async signInWithOAuth({ provider }: { provider: "google" | "github"; options?: { redirectTo?: string } }): Promise<AuthResult<{ url?: string }>> {
       await delay(100);
       console.info("[mock] signInWithOAuth", provider);
-      const url = `${window.location.origin}/auth/callback?code=dev`;
-      window.location.assign(url);
-      return { data: { url }, error: null };
+      return { data: { url: undefined }, error: null };
     },
     async exchangeCodeForSession(_code: string): Promise<AuthResult<{ session: unknown }>> {
       await delay(200);
