@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
-import { Github, Mail, Lock, Loader2, Google } from "lucide-react";
+import { Github, Mail, Lock, Loader2, Chrome } from "lucide-react";
 
 export default function Login() {
   const navigate = useNavigate();
