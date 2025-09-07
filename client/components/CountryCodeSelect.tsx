@@ -55,6 +55,12 @@ export default function CountryCodeSelect({ value, onChange }: { value: string; 
     };
   }, []);
 
+  useEffect(() => {
+    if (options.length && !options.some((o) => o.code === value)) {
+      onChange(options[0].code);
+    }
+  }, [options, value, onChange]);
+
   const currentLabel = useMemo(() => options.find((o) => o.code === value)?.label ?? value, [options, value]);
 
   return (
