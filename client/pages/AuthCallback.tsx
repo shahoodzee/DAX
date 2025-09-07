@@ -9,7 +9,13 @@ export default function AuthCallback() {
 
   useEffect(() => {
     const run = async () => {
-      const { error } = await supabase.auth.exchangeCodeForSession(window.location.href);
+      const params = new URL(window.location.href).searchParams;
+      const code = params.get("code");
+      if (!code) {
+        navigate("/login");
+        return;
+      }
+      const { error } = await supabase.auth.exchangeCodeForSession(code);
       if (error) {
         toast({ title: "Auth error", description: error.message, variant: "destructive" });
         navigate("/login");
