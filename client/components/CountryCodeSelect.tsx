@@ -28,20 +28,21 @@ export default function CountryCodeSelect({ value, onChange }: { value: string; 
       .then((r) => r.json())
       .then((data: any[]) => {
         if (!mounted) return;
-        const opts: Option[] = [];
+        const map = new Map<string, Option>();
         for (const c of data) {
           const root: string | undefined = c?.idd?.root;
           const suffixes: string[] | undefined = c?.idd?.suffixes;
-          if (root && Array.isArray(suffixes) && suffixes.length > 0) {
-            const code = `${root}${suffixes[0]}`;
-            const name = c?.name?.common as string;
-            if (code && name) {
-              opts.push({ code, label: `${name} (${code})` });
-            }
+          const name = c?.name?.common as string | undefined;
+          if (!root || !Array.isArray(suffixes) || !name) continue;
+          const first = suffixes[0] ?? "";
+          const code = `${root}${first}`;
+          if (!code) continue;
+          if (!map.has(code)) {
+            map.set(code, { code, label: `${name} (${code})` });
           }
         }
+        const opts = Array.from(map.values());
         if (opts.length > 0) {
-          // Sort by label for UX
           opts.sort((a, b) => a.label.localeCompare(b.label));
           setOptions(opts);
         }
