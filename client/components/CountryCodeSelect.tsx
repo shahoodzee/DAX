@@ -1,5 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface Option {
   code: string; // e.g. +1
@@ -19,7 +25,13 @@ const fallback: Option[] = [
   { code: "+86", label: "China (+86)" },
 ];
 
-export default function CountryCodeSelect({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+export default function CountryCodeSelect({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+}) {
   const [options, setOptions] = useState<Option[]>(fallback);
 
   useEffect(() => {
@@ -61,7 +73,10 @@ export default function CountryCodeSelect({ value, onChange }: { value: string; 
     }
   }, [options, value, onChange]);
 
-  const currentLabel = useMemo(() => options.find((o) => o.code === value)?.label ?? value, [options, value]);
+  const currentLabel = useMemo(
+    () => options.find((o) => o.code === value)?.label ?? value,
+    [options, value],
+  );
 
   return (
     <Select value={value} onValueChange={onChange}>

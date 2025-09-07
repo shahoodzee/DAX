@@ -18,22 +18,40 @@ type AuthResult<T> = { data: T | null; error: { message: string } | null };
 
 export const supabase = {
   auth: {
-    async signInWithPassword({ email }: { email: string; password: string }): Promise<AuthResult<{ session: unknown }>> {
+    async signInWithPassword({
+      email,
+    }: {
+      email: string;
+      password: string;
+    }): Promise<AuthResult<{ session: unknown }>> {
       await delay(300);
       console.info("[mock] signInWithPassword", email);
       return { data: { session: {} }, error: null };
     },
-    async signUp({ email }: { email: string; password: string; options?: { emailRedirectTo?: string } }): Promise<AuthResult<{ user: unknown }>> {
+    async signUp({
+      email,
+    }: {
+      email: string;
+      password: string;
+      options?: { emailRedirectTo?: string };
+    }): Promise<AuthResult<{ user: unknown }>> {
       await delay(300);
       console.info("[mock] signUp", email);
       return { data: { user: {} }, error: null };
     },
-    async signInWithOAuth({ provider }: { provider: "google" | "github"; options?: { redirectTo?: string } }): Promise<AuthResult<{ url?: string }>> {
+    async signInWithOAuth({
+      provider,
+    }: {
+      provider: "google" | "github";
+      options?: { redirectTo?: string };
+    }): Promise<AuthResult<{ url?: string }>> {
       await delay(100);
       console.info("[mock] signInWithOAuth", provider);
       return { data: { url: undefined }, error: null };
     },
-    async exchangeCodeForSession(_code: string): Promise<AuthResult<{ session: unknown }>> {
+    async exchangeCodeForSession(
+      _code: string,
+    ): Promise<AuthResult<{ session: unknown }>> {
       await delay(200);
       console.info("[mock] exchangeCodeForSession");
       return { data: { session: {} }, error: null };

@@ -17,7 +17,11 @@ export default function AuthCallback() {
       }
       const { error } = await supabase.auth.exchangeCodeForSession(code);
       if (error) {
-        toast({ title: "Auth error", description: error.message, variant: "destructive" });
+        toast({
+          title: "Auth error",
+          description: error.message,
+          variant: "destructive",
+        });
         navigate("/login");
         return;
       }
