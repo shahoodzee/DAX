@@ -90,7 +90,7 @@ export default function Login() {
         </CardContent>
         <CardFooter className="justify-center">
           <p className="text-sm text-muted-foreground">
-            Dont have an account? <Link to="/sign-up" className="text-primary underline-offset-4 hover:underline">Sign up</Link>
+            Don't have an account? <Link to="/sign-up" className="text-primary underline-offset-4 hover:underline">Sign up</Link>
           </p>
         </CardFooter>
       </Card>
