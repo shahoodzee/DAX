@@ -266,11 +266,7 @@ export default function Dashboard() {
                 currentFilters={filters}
               />
 
-              <Button className="valorant-gradient hover:opacity-90 whitespace-nowrap">
-                <Plus className="w-4 h-4 mr-2" />
-                <span className="hidden sm:inline">List Account</span>
-                <span className="sm:hidden">List</span>
-              </Button>
+              <CreateAccountModal />
             </div>
           </div>
 
