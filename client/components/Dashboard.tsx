@@ -15,9 +15,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import AccountCard from "./AccountCard";
 import Navbar from "./Navbar";
 import AdvancedFilter, { FilterState } from "./AdvancedFilter";
+import CreateAccountModal from "./CreateAccountModal";
 import { sampleAccounts } from "../data/sampleData";
 import { GameAccount } from "@shared/types";
-import { applyAdvancedFilters, getFilterSummary, hasActiveFilters } from "../utils/filterUtils";
+import {
+  applyAdvancedFilters,
+  getFilterSummary,
+  hasActiveFilters,
+} from "../utils/filterUtils";
 
 export default function Dashboard() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -266,11 +271,7 @@ export default function Dashboard() {
                 currentFilters={filters}
               />
 
-              <Button className="valorant-gradient hover:opacity-90 whitespace-nowrap">
-                <Plus className="w-4 h-4 mr-2" />
-                <span className="hidden sm:inline">List Account</span>
-                <span className="sm:hidden">List</span>
-              </Button>
+              <CreateAccountModal />
             </div>
           </div>
 
@@ -290,13 +291,15 @@ export default function Dashboard() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setFilters({
-                  gameType: "all",
-                  weaponTypes: [],
-                  skinTypes: [],
-                  specificCombinations: [],
-                  searchTerm: "",
-                })}
+                onClick={() =>
+                  setFilters({
+                    gameType: "all",
+                    weaponTypes: [],
+                    skinTypes: [],
+                    specificCombinations: [],
+                    searchTerm: "",
+                  })
+                }
                 className="text-xs text-gray-400 hover:text-white h-6 px-2"
               >
                 Clear all
