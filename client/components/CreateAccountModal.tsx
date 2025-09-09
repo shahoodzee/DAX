@@ -186,11 +186,15 @@ export default function CreateAccountModal() {
     }
   }, [countries, form]);
 
-  const selectedType = form.watch("accountType");
   const accountCurrencyOptions = useMemo(() => {
-    const opts = gameCurrencies[selectedType] ?? gameCurrencies["Other"];
-    return opts;
-  }, [selectedType]);
+    const map = new Map<string, { code: string; label: string }>();
+    Object.values(gameCurrencies).forEach((arr) => {
+      arr.forEach((c) => {
+        if (!map.has(c.code)) map.set(c.code, c);
+      });
+    });
+    return Array.from(map.values()).sort((a, b) => a.label.localeCompare(b.label));
+  }, []);
 
   useEffect(() => {
     const opts = accountCurrencyOptions;
