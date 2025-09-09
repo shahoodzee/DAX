@@ -2,18 +2,32 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { 
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { toast } from "@/hooks/use-toast";
 import { Plus } from "lucide-react";
 
@@ -49,45 +63,19 @@ const gameCurrencies: Record<string, { code: string; label: string }[]> = {
     { code: "USD", label: "USD" },
     { code: "EUR", label: "EUR" },
   ],
-  "League of Legends": [
-    { code: "RP", label: "Riot Points (RP)" },
-  ],
-  "Dota 2": [
-    { code: "USD", label: "USD" },
-  ],
-  Fortnite: [
-    { code: "VB", label: "V-Bucks (VB)" },
-  ],
-  PUBG: [
-    { code: "UC", label: "Unknown Cash (UC)" },
-  ],
-  "Apex Legends": [
-    { code: "AC", label: "Apex Coins (AC)" },
-  ],
-  Overwatch: [
-    { code: "CR", label: "Credits (CR)" },
-  ],
-  "Rainbow Six Siege": [
-    { code: "R6C", label: "R6 Credits (R6C)" },
-  ],
-  "Genshin Impact": [
-    { code: "PG", label: "Primogems (PG)" },
-  ],
-  Roblox: [
-    { code: "R$", label: "Robux (R$)" },
-  ],
-  Minecraft: [
-    { code: "MCC", label: "Minecoins (MCC)" },
-  ],
-  "Call of Duty": [
-    { code: "CP", label: "CoD Points (CP)" },
-  ],
-  "Rocket League": [
-    { code: "CR", label: "Credits (CR)" },
-  ],
-  Other: [
-    { code: "USD", label: "USD" },
-  ],
+  "League of Legends": [{ code: "RP", label: "Riot Points (RP)" }],
+  "Dota 2": [{ code: "USD", label: "USD" }],
+  Fortnite: [{ code: "VB", label: "V-Bucks (VB)" }],
+  PUBG: [{ code: "UC", label: "Unknown Cash (UC)" }],
+  "Apex Legends": [{ code: "AC", label: "Apex Coins (AC)" }],
+  Overwatch: [{ code: "CR", label: "Credits (CR)" }],
+  "Rainbow Six Siege": [{ code: "R6C", label: "R6 Credits (R6C)" }],
+  "Genshin Impact": [{ code: "PG", label: "Primogems (PG)" }],
+  Roblox: [{ code: "R$", label: "Robux (R$)" }],
+  Minecraft: [{ code: "MCC", label: "Minecoins (MCC)" }],
+  "Call of Duty": [{ code: "CP", label: "CoD Points (CP)" }],
+  "Rocket League": [{ code: "CR", label: "Credits (CR)" }],
+  Other: [{ code: "USD", label: "USD" }],
 };
 
 const priceCurrencies = [
@@ -193,7 +181,9 @@ export default function CreateAccountModal() {
         if (!map.has(c.code)) map.set(c.code, c);
       });
     });
-    return Array.from(map.values()).sort((a, b) => a.label.localeCompare(b.label));
+    return Array.from(map.values()).sort((a, b) =>
+      a.label.localeCompare(b.label),
+    );
   }, []);
 
   useEffect(() => {
@@ -225,7 +215,9 @@ export default function CreateAccountModal() {
       </DialogTrigger>
       <DialogContent className="max-w-2xl bg-gray-900 border-gray-700 text-white">
         <DialogHeader>
-          <DialogTitle className="text-valorant-gold">Create Account</DialogTitle>
+          <DialogTitle className="text-valorant-gold">
+            Create Account
+          </DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -237,13 +229,20 @@ export default function CreateAccountModal() {
                   <FormItem>
                     <FormLabel>Region</FormLabel>
                     <FormControl>
-                      <Select value={field.value} onValueChange={field.onChange}>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
                         <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
                           <SelectValue placeholder="Select country" />
                         </SelectTrigger>
                         <SelectContent className="bg-gray-800 text-white border-gray-600 max-h-64">
                           {countries.map((c) => (
-                            <SelectItem key={c.code} value={c.code} className="text-white">
+                            <SelectItem
+                              key={c.code}
+                              value={c.code}
+                              className="text-white"
+                            >
                               {c.name} ({c.code})
                             </SelectItem>
                           ))}
@@ -262,13 +261,20 @@ export default function CreateAccountModal() {
                   <FormItem>
                     <FormLabel>Account Type</FormLabel>
                     <FormControl>
-                      <Select value={field.value} onValueChange={field.onChange}>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
                         <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
                           <SelectValue placeholder="Select account type" />
                         </SelectTrigger>
                         <SelectContent className="bg-gray-800 text-white border-gray-600">
                           {accountTypes.map((t) => (
-                            <SelectItem key={t} value={t} className="text-white">
+                            <SelectItem
+                              key={t}
+                              value={t}
+                              className="text-white"
+                            >
                               {t}
                             </SelectItem>
                           ))}
@@ -287,7 +293,11 @@ export default function CreateAccountModal() {
                   <FormItem>
                     <FormLabel>Account Name</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="e.g., AceHunter#1234" className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400" />
+                      <Input
+                        {...field}
+                        placeholder="e.g., AceHunter#1234"
+                        className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -301,13 +311,20 @@ export default function CreateAccountModal() {
                   <FormItem>
                     <FormLabel>Account Currency</FormLabel>
                     <FormControl>
-                      <Select value={field.value} onValueChange={field.onChange}>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
                         <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
                           <SelectValue placeholder="Select currency" />
                         </SelectTrigger>
                         <SelectContent className="bg-gray-800 text-white border-gray-600">
                           {accountCurrencyOptions.map((c) => (
-                            <SelectItem key={c.code} value={c.code} className="text-white">
+                            <SelectItem
+                              key={c.code}
+                              value={c.code}
+                              className="text-white"
+                            >
                               {c.label}
                             </SelectItem>
                           ))}
@@ -331,8 +348,14 @@ export default function CreateAccountModal() {
                           type="number"
                           min={0}
                           step="1"
-                          value={Number.isNaN(field.value as number) ? 0 : field.value}
-                          onChange={(e) => field.onChange(Number(e.target.value))}
+                          value={
+                            Number.isNaN(field.value as number)
+                              ? 0
+                              : field.value
+                          }
+                          onChange={(e) =>
+                            field.onChange(Number(e.target.value))
+                          }
                           className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
                           placeholder="e.g., 2200"
                         />
@@ -360,13 +383,20 @@ export default function CreateAccountModal() {
                   <FormItem>
                     <FormLabel>Selling Price Currency</FormLabel>
                     <FormControl>
-                      <Select value={field.value} onValueChange={field.onChange}>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
                         <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
                           <SelectValue placeholder="Select currency" />
                         </SelectTrigger>
                         <SelectContent className="bg-gray-800 text-white border-gray-600 max-h-64">
                           {priceCurrencies.map((c) => (
-                            <SelectItem key={c} value={c} className="text-white">
+                            <SelectItem
+                              key={c}
+                              value={c}
+                              className="text-white"
+                            >
                               {c}
                             </SelectItem>
                           ))}
@@ -389,7 +419,9 @@ export default function CreateAccountModal() {
                         type="number"
                         min={0}
                         step="1"
-                        value={Number.isNaN(field.value as number) ? 0 : field.value}
+                        value={
+                          Number.isNaN(field.value as number) ? 0 : field.value
+                        }
                         onChange={(e) => field.onChange(Number(e.target.value))}
                         className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
                         placeholder="e.g., 5000"
@@ -407,7 +439,11 @@ export default function CreateAccountModal() {
                   <FormItem>
                     <FormLabel>Account Level</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="e.g., 150" className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400" />
+                      <Input
+                        {...field}
+                        placeholder="e.g., 150"
+                        className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -416,10 +452,18 @@ export default function CreateAccountModal() {
             </div>
 
             <DialogFooter className="gap-2">
-              <Button type="button" variant="outline" onClick={() => setOpen(false)} className="border-gray-600 text-gray-300 hover:bg-gray-700">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setOpen(false)}
+                className="border-gray-600 text-gray-300 hover:bg-gray-700"
+              >
                 Cancel
               </Button>
-              <Button type="submit" className="bg-valorant-red hover:bg-valorant-red/80 text-white">
+              <Button
+                type="submit"
+                className="bg-valorant-red hover:bg-valorant-red/80 text-white"
+              >
                 Create
               </Button>
             </DialogFooter>
