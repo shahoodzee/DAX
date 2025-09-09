@@ -15,6 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import AccountCard from "./AccountCard";
 import Navbar from "./Navbar";
 import AdvancedFilter, { FilterState } from "./AdvancedFilter";
+import CreateAccountModal from "./CreateAccountModal";
 import { sampleAccounts } from "../data/sampleData";
 import { GameAccount } from "@shared/types";
 import { applyAdvancedFilters, getFilterSummary, hasActiveFilters } from "../utils/filterUtils";
