@@ -179,6 +179,13 @@ export default function CreateAccountModal() {
     },
   });
 
+  useEffect(() => {
+    const current = form.getValues("region");
+    if (countries.length && !countries.some((c) => c.code === current)) {
+      form.setValue("region", countries[0].code, { shouldValidate: true });
+    }
+  }, [countries, form]);
+
   const selectedType = form.watch("accountType");
   const accountCurrencyOptions = useMemo(() => {
     const opts = gameCurrencies[selectedType] ?? gameCurrencies["Other"];
