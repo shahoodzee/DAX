@@ -82,7 +82,7 @@ const gameCurrencies: Record<string, { code: string; label: string }[]> = {
   "Call of Duty": [
     { code: "CP", label: "CoD Points (CP)" },
   ],
-  Rocket: [
+  "Rocket League": [
     { code: "CR", label: "Credits (CR)" },
   ],
   Other: [
