@@ -220,7 +220,7 @@ export default function MyListings() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-400">Total Value</p>
-                    <p className="text-2xl font-bold text-valorant-gold">${'{'}statusStats.totalValue.toLocaleString(){'}'}</p>
+                    <p className="text-2xl font-bold text-valorant-gold">${statusStats.totalValue.toLocaleString()}</p>
                   </div>
                   <TrendingUp className="w-8 h-8 text-valorant-red floating" />
                 </div>
@@ -237,7 +237,7 @@ export default function MyListings() {
 
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
             {displayedAccounts.map((account, index) => (
-              <AccountCard key={`${'{'}account.id{'}'}-${'{'}index{'}'}`} account={account} index={index} />
+              <AccountCard key={`${account.id}-${index}`} account={account} index={index} />
             ))}
           </div>
 
