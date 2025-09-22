@@ -38,4 +38,6 @@ function App() {
 const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("Root element not found");
 
-createRoot(rootElement).render(<App />);
+const w = window as any;
+w.__app_root = w.__app_root || createRoot(rootElement);
+w.__app_root.render(<App />);
