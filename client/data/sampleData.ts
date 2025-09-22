@@ -14,7 +14,7 @@ export const sampleSkins: Skin[] = [
     rarity: "Legendary",
   },
   {
-    id: "2", 
+    id: "2",
     name: "Gaia's Vengeance Ghost",
     weaponType: VALORANT_WEAPONS.Ghost,
     skinType: "Gaia",
@@ -25,7 +25,7 @@ export const sampleSkins: Skin[] = [
   {
     id: "3",
     name: "Magepunk Spectre",
-    weaponType: VALORANT_WEAPONS.Spectre, 
+    weaponType: VALORANT_WEAPONS.Spectre,
     skinType: "Magepunk",
     price: 1775,
     currency: "VP",
@@ -54,7 +54,7 @@ export const sampleSkins: Skin[] = [
     id: "6",
     name: "AWP Dragon Lore",
     weaponType: CSGO_WEAPONS.AWP,
-    skinType: "Dragon Lore", 
+    skinType: "Dragon Lore",
     price: 3200,
     currency: "$",
     rarity: "Covert",

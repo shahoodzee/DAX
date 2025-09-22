@@ -12,7 +12,12 @@ export interface Skin {
 export interface GameAccount {
   id: string;
   accountName: string;
-  accountType: 'Valorant' | 'CSGO' | 'Steam' | 'League of Legends' | 'Overwatch';
+  accountType:
+    | "Valorant"
+    | "CSGO"
+    | "Steam"
+    | "League of Legends"
+    | "Overwatch";
   moneySpent: number; // USD
   gameMoneySpent: number;
   gameCurrency: string; // e.g., "VP", "Keys", "RP"
@@ -27,8 +32,8 @@ export interface GameAccount {
   featured: boolean;
   images: string[];
   description?: string;
-  verificationStatus: 'verified' | 'pending' | 'unverified';
-  transactionStatus: 'listed' | 'pending' | 'sold';
+  verificationStatus: "verified" | "pending" | "unverified";
+  transactionStatus: "listed" | "pending" | "sold";
   buyerId?: string;
   buyerName?: string;
   createdAt: Date;
