@@ -28,6 +28,9 @@ export interface GameAccount {
   images: string[];
   description?: string;
   verificationStatus: 'verified' | 'pending' | 'unverified';
+  transactionStatus: 'listed' | 'pending' | 'sold';
+  buyerId?: string;
+  buyerName?: string;
   createdAt: Date;
   lastUpdated: Date;
 }
