@@ -44,12 +44,7 @@ export default function Sidebar({ stats }: { stats: SidebarStats }) {
                 }`
               }
             >
-              <item.icon
-                className={({ isActive }: { isActive?: boolean }) =>
-                  `w-5 h-5 ${isActive ? "text-valorant-red" : "group-hover:text-valorant-cyan"}`
-                as unknown as string
-              }
-            />
+              <item.icon className="w-5 h-5 group-hover:text-valorant-cyan" />
               <span className="font-medium">{item.label}</span>
               {item.badge && (
                 <Badge className="ml-auto bg-valorant-gold text-black text-xs">{item.badge}</Badge>
