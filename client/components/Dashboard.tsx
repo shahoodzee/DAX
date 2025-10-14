@@ -148,13 +148,6 @@ export default function Dashboard() {
     filteredAccounts,
   ]);
 
-  const sidebarItems = [
-    { icon: Home, label: "Dashboard", active: true },
-    { icon: Grid3X3, label: "Marketplace", active: false },
-    { icon: TrendingUp, label: "My Listings", active: false, badge: "3" },
-    { icon: Users, label: "Community", active: false },
-    { icon: Settings, label: "Settings", active: false },
-  ];
 
   const stats = {
     totalListings: filteredAccounts.length,
