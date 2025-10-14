@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import AccountCard from "@/components/AccountCard";
 import Navbar from "@/components/Navbar";
+import Sidebar from "@/components/Sidebar";
 import AdvancedFilter, { FilterState } from "@/components/AdvancedFilter";
 import { sampleAccounts } from "@/data/sampleData";
 import { GameAccount } from "@shared/types";
@@ -44,6 +45,14 @@ export default function MyListings() {
   const ACCOUNTS_PER_PAGE = 20;
 
   const filteredAccounts = applyAdvancedFilters(accounts, filters, searchTerm);
+
+  const sidebarStats = useMemo(() => {
+    const totalListings = filteredAccounts.length;
+    const totalValue = filteredAccounts.reduce((sum, acc) => sum + acc.price, 0);
+    const averagePrice = Math.round(totalListings ? totalValue / totalListings : 0);
+    const featuredCount = filteredAccounts.filter((acc) => acc.featured).length;
+    return { totalListings, averagePrice, featuredCount };
+  }, [filteredAccounts]);
 
   const statusStats = useMemo(() => {
     const listed = filteredAccounts.filter(
@@ -154,6 +163,7 @@ export default function MyListings() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-valorant-dark text-white">
+      <Sidebar stats={sidebarStats} />
       <div className="lg:ml-64">
         <Navbar />
 
