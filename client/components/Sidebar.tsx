@@ -12,10 +12,10 @@ export interface SidebarStats {
 export default function Sidebar({ stats }: { stats: SidebarStats }) {
   const navItems: { to: string; label: string; icon: React.ElementType; badge?: string }[] = [
     { to: "/dashboard", label: "Dashboard", icon: Home },
-    { to: "/", label: "Marketplace", icon: Grid3X3 },
+    { to: "/marketplace", label: "Marketplace", icon: Grid3X3 },
     { to: "/my-listings", label: "My Listings", icon: TrendingUp },
-    { to: "#", label: "Community", icon: Users },
-    { to: "#", label: "Settings", icon: Settings },
+    { to: "/community", label: "Community", icon: Users },
+    { to: "/settings", label: "Settings", icon: Settings },
   ];
 
   return (
