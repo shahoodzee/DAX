@@ -183,6 +183,7 @@ export default function AccountCard({ account, index }: AccountCardProps) {
               variant="outline"
               size="sm"
               className="border-valorant-cyan text-valorant-cyan hover:bg-valorant-cyan hover:text-black flex-1 sm:flex-none"
+              onClick={() => navigate(`/account/${account.id}`)}
             >
               <Eye className="w-4 h-4 mr-1" />
               View
