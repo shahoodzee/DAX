@@ -13,6 +13,7 @@ import MyListings from "./pages/MyListings";
 import Marketplace from "./pages/Marketplace";
 import Community from "./pages/Community";
 import Settings from "./pages/Settings";
+import AccountDetails from "./pages/AccountDetails";
 
 const queryClient = new QueryClient();
 
