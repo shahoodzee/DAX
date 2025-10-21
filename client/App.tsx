@@ -26,6 +26,7 @@ function App() {
             <Route path="/" element={<Index />} />
             <Route path="/dashboard" element={<Index />} />
             <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="/account/:id" element={<AccountDetails />} />
             <Route path="/community" element={<Community />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/login" element={<Login />} />
