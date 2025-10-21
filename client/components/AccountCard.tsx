@@ -20,6 +20,7 @@ const gameTypeColors = {
 };
 
 export default function AccountCard({ account, index }: AccountCardProps) {
+  const navigate = useNavigate();
   const gameColor =
     gameTypeColors[account.accountType] || "bg-gray-500 text-white";
   const skinsScrollRef = useRef<HTMLDivElement>(null);
