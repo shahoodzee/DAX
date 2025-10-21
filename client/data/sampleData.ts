@@ -2,6 +2,141 @@ import { GameAccount, Skin } from "@shared/types";
 import { VALORANT_WEAPONS } from "@shared/valorant";
 import { CSGO_WEAPONS } from "@shared/csgo";
 
+export interface Comment {
+  id: string;
+  authorId: string;
+  authorName: string;
+  authorAvatar?: string;
+  content: string;
+  createdAt: Date;
+  replies?: Comment[];
+}
+
+export interface NotificationEvent {
+  id: string;
+  type: "price_change" | "title_change" | "status_change" | "listing_created";
+  message: string;
+  timestamp: Date;
+  accountId: string;
+}
+
+export const mockComments: Record<string, Comment[]> = {
+  acc1: [
+    {
+      id: "c1",
+      authorId: "user-2",
+      authorName: "Alex Smith",
+      content: "Great account! Is it still available?",
+      createdAt: new Date("2024-12-20T10:30:00"),
+    },
+    {
+      id: "c2",
+      authorId: "user-3",
+      authorName: "Sarah Chen",
+      content: "How long have you owned this account?",
+      createdAt: new Date("2024-12-21T14:15:00"),
+    },
+    {
+      id: "c3",
+      authorId: "user-1",
+      authorName: "Jhon Doe",
+      content: "Owned it for 2 years. All skins are legitimately purchased.",
+      createdAt: new Date("2024-12-21T15:45:00"),
+    },
+  ],
+  acc2: [
+    {
+      id: "c4",
+      authorId: "user-4",
+      authorName: "Mike Johnson",
+      content: "Is the Dragon Lore Factory New?",
+      createdAt: new Date("2024-12-19T09:00:00"),
+    },
+  ],
+  acc3: [],
+  acc4: [
+    {
+      id: "c5",
+      authorId: "user-5",
+      authorName: "Emma Wilson",
+      content: "Interested in this. Can you provide more details about the account?",
+      createdAt: new Date("2024-12-18T16:20:00"),
+    },
+  ],
+  acc5: [],
+  acc6: [],
+};
+
+export const mockNotifications: Record<string, NotificationEvent[]> = {
+  acc1: [
+    {
+      id: "n1",
+      type: "listing_created",
+      message: "Account listed on marketplace",
+      timestamp: new Date("2024-12-25T08:00:00"),
+      accountId: "acc1",
+    },
+    {
+      id: "n2",
+      type: "price_change",
+      message: "Price reduced from $400 to $380",
+      timestamp: new Date("2024-12-24T14:30:00"),
+      accountId: "acc1",
+    },
+  ],
+  acc2: [
+    {
+      id: "n3",
+      type: "status_change",
+      message: "Account marked as sold",
+      timestamp: new Date("2024-12-23T10:00:00"),
+      accountId: "acc2",
+    },
+    {
+      id: "n4",
+      type: "listing_created",
+      message: "Account listed on marketplace",
+      timestamp: new Date("2024-12-10T12:00:00"),
+      accountId: "acc2",
+    },
+  ],
+  acc3: [
+    {
+      id: "n5",
+      type: "listing_created",
+      message: "Account listed on marketplace",
+      timestamp: new Date("2024-12-25T09:30:00"),
+      accountId: "acc3",
+    },
+    {
+      id: "n6",
+      type: "title_change",
+      message: 'Account name changed to "SteamCollector"',
+      timestamp: new Date("2024-12-15T11:00:00"),
+      accountId: "acc3",
+    },
+  ],
+  acc4: [],
+  acc5: [
+    {
+      id: "n7",
+      type: "listing_created",
+      message: "Account listed on marketplace",
+      timestamp: new Date("2024-12-25T07:00:00"),
+      accountId: "acc5",
+    },
+  ],
+  acc6: [
+    {
+      id: "n8",
+      type: "listing_created",
+      message: "Account listed on marketplace",
+      timestamp: new Date("2024-12-25T06:00:00"),
+      accountId: "acc6",
+    },
+  ],
+};
+
 export const sampleSkins: Skin[] = [
   // Valorant Skins
   {
