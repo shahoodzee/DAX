@@ -14,6 +14,7 @@ import Marketplace from "./pages/Marketplace";
 import Community from "./pages/Community";
 import Settings from "./pages/Settings";
 import AccountDetails from "./pages/AccountDetails";
+import SellerListings from "./pages/SellerListings";
 
 const queryClient = new QueryClient();
 
