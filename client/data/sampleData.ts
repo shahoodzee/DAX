@@ -67,6 +67,59 @@ export const mockComments: Record<string, Comment[]> = {
   acc6: [],
 };
 
+export const sampleUsers = [
+  {
+    id: "user-1",
+    username: "jhon_doe",
+    email: "jhon@example.com",
+    profileImage: undefined,
+    rating: 4.8,
+    totalSales: 12,
+    joinedAt: new Date("2023-06-15"),
+    fullName: "Jhon Doe",
+  },
+  {
+    id: "seller2",
+    username: "skin_collector",
+    email: "skincollector@example.com",
+    profileImage: undefined,
+    rating: 4.6,
+    totalSales: 8,
+    joinedAt: new Date("2023-08-20"),
+    fullName: "SkinCollector",
+  },
+  {
+    id: "seller3",
+    username: "game_library",
+    email: "gamelibrary@example.com",
+    profileImage: undefined,
+    rating: 4.7,
+    totalSales: 5,
+    joinedAt: new Date("2023-09-10"),
+    fullName: "GameLibrary",
+  },
+  {
+    id: "seller5",
+    username: "skin_trader",
+    email: "skintrader@example.com",
+    profileImage: undefined,
+    rating: 4.9,
+    totalSales: 15,
+    joinedAt: new Date("2023-05-05"),
+    fullName: "SkinTrader",
+  },
+  {
+    id: "seller6",
+    username: "quick_seller",
+    email: "quickseller@example.com",
+    profileImage: undefined,
+    rating: 4.5,
+    totalSales: 3,
+    joinedAt: new Date("2023-10-12"),
+    fullName: "QuickSeller",
+  },
+];
+
 export const mockNotifications: Record<string, NotificationEvent[]> = {
   acc1: [
     {
