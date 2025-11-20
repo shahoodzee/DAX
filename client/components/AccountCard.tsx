@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Eye, ExternalLink, TrendingUp } from "lucide-react";
 import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface AccountCardProps {
   account: GameAccount;
@@ -19,6 +20,7 @@ const gameTypeColors = {
 };
 
 export default function AccountCard({ account, index }: AccountCardProps) {
+  const navigate = useNavigate();
   const gameColor =
     gameTypeColors[account.accountType] || "bg-gray-500 text-white";
   const skinsScrollRef = useRef<HTMLDivElement>(null);
@@ -181,6 +183,7 @@ export default function AccountCard({ account, index }: AccountCardProps) {
               variant="outline"
               size="sm"
               className="border-valorant-cyan text-valorant-cyan hover:bg-valorant-cyan hover:text-black flex-1 sm:flex-none"
+              onClick={() => navigate(`/account/${account.id}`)}
             >
               <Eye className="w-4 h-4 mr-1" />
               View

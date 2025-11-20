@@ -13,6 +13,7 @@ import MyListings from "./pages/MyListings";
 import Marketplace from "./pages/Marketplace";
 import Community from "./pages/Community";
 import Settings from "./pages/Settings";
+import AccountDetails from "./pages/AccountDetails";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ function App() {
             <Route path="/" element={<Index />} />
             <Route path="/dashboard" element={<Index />} />
             <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="/account/:id" element={<AccountDetails />} />
             <Route path="/community" element={<Community />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/login" element={<Login />} />
