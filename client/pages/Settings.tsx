@@ -56,39 +56,36 @@ export default function Settings() {
                 </div>
 
                 <div className="space-y-2">
-                  <h3 className="text-lg font-semibold">Profile Privacy</h3>
+                  <h3 className="text-lg font-semibold text-white">Profile Privacy</h3>
                   <p className="text-gray-400 text-sm mb-4">
                     Control who can see your profile and trading history
                   </p>
                   <Button
-                    variant="outline"
-                    className="border-gray-600 text-gray-300 hover:bg-gray-700 w-full"
+                    className="bg-valorant-red hover:bg-valorant-red/80 text-white w-full"
                   >
                     Manage Privacy Settings
                   </Button>
                 </div>
 
                 <div className="space-y-2">
-                  <h3 className="text-lg font-semibold">Two-Factor Authentication</h3>
+                  <h3 className="text-lg font-semibold text-white">Two-Factor Authentication</h3>
                   <p className="text-gray-400 text-sm mb-4">
                     Add an extra layer of security to your account
                   </p>
                   <Button
-                    variant="outline"
-                    className="border-gray-600 text-gray-300 hover:bg-gray-700 w-full"
+                    className="bg-valorant-red hover:bg-valorant-red/80 text-white w-full"
                   >
                     Enable 2FA
                   </Button>
                 </div>
 
                 <div className="space-y-2">
-                  <h3 className="text-lg font-semibold">Email Preferences</h3>
+                  <h3 className="text-lg font-semibold text-white">Email Preferences</h3>
                   <p className="text-gray-400 text-sm mb-4">
                     Choose what notifications you want to receive
                   </p>
                   <Button
-                    variant="outline"
-                    className="border-gray-600 text-gray-300 hover:bg-gray-700 w-full"
+                    className="bg-valorant-red hover:bg-valorant-red/80 text-white w-full"
                   >
                     Update Email Preferences
                   </Button>
