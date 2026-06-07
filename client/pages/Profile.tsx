@@ -77,7 +77,7 @@ export default function Profile() {
                   onClick={() => setIsEditing(true)}
                   className="bg-valorant-red hover:bg-valorant-red/80"
                 >
-                  Edit Profile
+                  Edit
                 </Button>
               )}
             </CardHeader>
@@ -87,118 +87,97 @@ export default function Profile() {
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     First Name
                   </label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={displayProfile.firstName}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none"
-                    />
-                  ) : (
-                    <p className="text-white">{displayProfile.firstName}</p>
-                  )}
+                  <input
+                    type="text"
+                    name="firstName"
+                    value={displayProfile.firstName}
+                    onChange={handleInputChange}
+                    disabled={!isEditing}
+                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none disabled:opacity-70 disabled:cursor-not-allowed"
+                  />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     Last Name
                   </label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="lastName"
-                      value={displayProfile.lastName}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none"
-                    />
-                  ) : (
-                    <p className="text-white">{displayProfile.lastName}</p>
-                  )}
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={displayProfile.lastName}
+                    onChange={handleInputChange}
+                    disabled={!isEditing}
+                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none disabled:opacity-70 disabled:cursor-not-allowed"
+                  />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     Username
                   </label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="username"
-                      value={displayProfile.username}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none"
-                    />
-                  ) : (
-                    <p className="text-white">{displayProfile.username}</p>
-                  )}
+                  <input
+                    type="text"
+                    name="username"
+                    value={displayProfile.username}
+                    onChange={handleInputChange}
+                    disabled={!isEditing}
+                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none disabled:opacity-70 disabled:cursor-not-allowed"
+                  />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     Email
                   </label>
-                  {isEditing ? (
-                    <input
-                      type="email"
-                      name="email"
-                      value={displayProfile.email}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none"
-                    />
-                  ) : (
-                    <p className="text-white">{displayProfile.email}</p>
-                  )}
+                  <input
+                    type="email"
+                    name="email"
+                    value={displayProfile.email}
+                    onChange={handleInputChange}
+                    disabled={!isEditing}
+                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none disabled:opacity-70 disabled:cursor-not-allowed"
+                  />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     Phone
                   </label>
-                  {isEditing ? (
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={displayProfile.phone}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none"
-                    />
-                  ) : (
-                    <p className="text-white">{displayProfile.phone}</p>
-                  )}
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={displayProfile.phone}
+                    onChange={handleInputChange}
+                    disabled={!isEditing}
+                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none disabled:opacity-70 disabled:cursor-not-allowed"
+                  />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     Country
                   </label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="country"
-                      value={displayProfile.country}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none"
-                    />
-                  ) : (
-                    <p className="text-white">{displayProfile.country}</p>
-                  )}
+                  <input
+                    type="text"
+                    name="country"
+                    value={displayProfile.country}
+                    onChange={handleInputChange}
+                    disabled={!isEditing}
+                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none disabled:opacity-70 disabled:cursor-not-allowed"
+                  />
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">Bio</label>
-                {isEditing ? (
-                  <textarea
-                    name="bio"
-                    value={displayProfile.bio}
-                    onChange={handleInputChange}
-                    rows={4}
-                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none"
-                  />
-                ) : (
-                  <p className="text-white">{displayProfile.bio}</p>
-                )}
+                <textarea
+                  name="bio"
+                  value={displayProfile.bio}
+                  onChange={handleInputChange}
+                  disabled={!isEditing}
+                  rows={4}
+                  className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none disabled:opacity-70 disabled:cursor-not-allowed"
+                />
               </div>
 
               {isEditing && (
