@@ -46,7 +46,7 @@ export default function Settings() {
           <div className="grid grid-cols-1 gap-6">
             <Card className="bg-gray-800 border-gray-700">
               <CardHeader>
-                <CardTitle className="text-xl">Account Settings</CardTitle>
+                <CardTitle className="text-xl text-white">Account Settings</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
