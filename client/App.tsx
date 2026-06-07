@@ -13,6 +13,8 @@ import MyListings from "./pages/MyListings";
 import Marketplace from "./pages/Marketplace";
 import Community from "./pages/Community";
 import Settings from "./pages/Settings";
+import Profile from "./pages/Profile";
+import Account from "./pages/Account";
 import AccountDetails from "./pages/AccountDetails";
 import SellerListings from "./pages/SellerListings";
 
@@ -28,6 +30,8 @@ function App() {
             <Route path="/dashboard" element={<Index />} />
             <Route path="/marketplace" element={<Marketplace />} />
             <Route path="/account/:id" element={<AccountDetails />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/account" element={<Account />} />
             <Route path="/community" element={<Community />} />
             <Route path="/community/:userId" element={<SellerListings />} />
             <Route path="/settings" element={<Settings />} />

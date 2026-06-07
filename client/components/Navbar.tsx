@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -17,6 +18,8 @@ export default function Navbar({
   onMenuClick,
   showMenuButton = true,
 }: NavbarProps) {
+  const navigate = useNavigate();
+
   return (
     <nav className="bg-gray-900/50 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-30">
       <div className="px-4 sm:px-6 py-4">
@@ -58,15 +61,24 @@ export default function Navbar({
                 align="end"
                 className="w-48 bg-gray-800 border-gray-700 text-white"
               >
-                <DropdownMenuItem className="hover:bg-gray-700 focus:bg-gray-700 cursor-pointer">
+                <DropdownMenuItem
+                  onClick={() => navigate("/profile")}
+                  className="hover:bg-gray-700 focus:bg-gray-700 cursor-pointer"
+                >
                   <UserCircle className="w-4 h-4 mr-2" />
                   Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-gray-700 focus:bg-gray-700 cursor-pointer">
+                <DropdownMenuItem
+                  onClick={() => navigate("/account")}
+                  className="hover:bg-gray-700 focus:bg-gray-700 cursor-pointer"
+                >
                   <User className="w-4 h-4 mr-2" />
                   Account
                 </DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-gray-700 focus:bg-gray-700 cursor-pointer">
+                <DropdownMenuItem
+                  onClick={() => navigate("/settings")}
+                  className="hover:bg-gray-700 focus:bg-gray-700 cursor-pointer"
+                >
                   <Settings className="w-4 h-4 mr-2" />
                   Settings
                 </DropdownMenuItem>
