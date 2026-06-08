@@ -182,7 +182,7 @@ export default function AccountCard({ account, index }: AccountCardProps) {
             <Button
               variant="outline"
               size="sm"
-              className="border-valorant-cyan text-valorant-cyan hover:bg-valorant-cyan hover:text-black flex-1 sm:flex-none"
+              className="border-gray-600 text-gray-300 hover:border-valorant-cyan hover:text-white hover:bg-gray-800 flex-1 sm:flex-none"
               onClick={() => navigate(`/account/${account.id}`)}
             >
               <Eye className="w-4 h-4 mr-1" />
@@ -202,7 +202,7 @@ export default function AccountCard({ account, index }: AccountCardProps) {
         <Button
           variant="ghost"
           size="sm"
-          className="w-full text-valorant-cyan hover:text-white hover:bg-valorant-cyan/20"
+          className="w-full text-gray-400 hover:text-white hover:bg-gray-800"
           onClick={() => window.open(account.accountLink, "_blank")}
         >
           <ExternalLink className="w-4 h-4 mr-2" />

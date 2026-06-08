@@ -240,65 +240,65 @@ export default function Dashboard() {
         <main className="p-4 sm:p-6">
           {/* Stats Overview */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <Card className="bg-gradient-to-r from-valorant-red/20 to-valorant-red/10 border-valorant-red/30">
+            <Card className="bg-gradient-to-r from-valorant-red/10 to-transparent border border-valorant-red/20">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-400">Total Value</p>
-                    <p className="text-2xl font-bold text-valorant-gold">
+                    <p className="text-sm text-gray-500">Total Value</p>
+                    <p className="text-2xl font-bold text-white">
                       ${stats.totalValue.toLocaleString()}
                     </p>
                   </div>
-                  <TrendingUp className="w-8 h-8 text-valorant-red floating" />
+                  <TrendingUp className="w-8 h-8 text-valorant-red/60 floating" />
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-r from-valorant-cyan/20 to-valorant-cyan/10 border-valorant-cyan/30">
+            <Card className="bg-gradient-to-r from-valorant-cyan/10 to-transparent border border-valorant-cyan/20">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-400">Active Listings</p>
+                    <p className="text-sm text-gray-500">Active Listings</p>
                     <p className="text-2xl font-bold text-white">
                       {stats.totalListings}
                     </p>
                   </div>
                   <Grid3X3
-                    className="w-8 h-8 text-valorant-cyan floating"
+                    className="w-8 h-8 text-valorant-cyan/60 floating"
                     style={{ animationDelay: "0.5s" }}
                   />
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-r from-valorant-gold/20 to-valorant-gold/10 border-valorant-gold/30">
+            <Card className="bg-gradient-to-r from-valorant-gold/10 to-transparent border border-valorant-gold/20">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-400">Average Price</p>
-                    <p className="text-2xl font-bold text-valorant-gold">
+                    <p className="text-sm text-gray-500">Average Price</p>
+                    <p className="text-2xl font-bold text-white">
                       ${stats.averagePrice}
                     </p>
                   </div>
                   <TrendingUp
-                    className="w-8 h-8 text-valorant-gold floating"
+                    className="w-8 h-8 text-valorant-gold/60 floating"
                     style={{ animationDelay: "1s" }}
                   />
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-r from-valorant-purple/20 to-valorant-purple/10 border-valorant-purple/30">
+            <Card className="bg-gradient-to-r from-valorant-purple/10 to-transparent border border-valorant-purple/20">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-400">Featured</p>
+                    <p className="text-sm text-gray-500">Featured</p>
                     <p className="text-2xl font-bold text-white">
                       {stats.featuredCount}
                     </p>
                   </div>
                   <Users
-                    className="w-8 h-8 text-valorant-purple floating"
+                    className="w-8 h-8 text-valorant-purple/60 floating"
                     style={{ animationDelay: "1.5s" }}
                   />
                 </div>
