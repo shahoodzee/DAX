@@ -245,7 +245,7 @@ export default function Dashboard() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-500">Total Value</p>
-                    <p className="text-2xl font-bold text-white">
+                    <p className="text-2xl font-bold text-valorant-gold">
                       ${stats.totalValue.toLocaleString()}
                     </p>
                   </div>
@@ -259,7 +259,7 @@ export default function Dashboard() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-500">Active Listings</p>
-                    <p className="text-2xl font-bold text-white">
+                    <p className="text-2xl font-bold text-valorant-gold">
                       {stats.totalListings}
                     </p>
                   </div>
@@ -276,7 +276,7 @@ export default function Dashboard() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-500">Average Price</p>
-                    <p className="text-2xl font-bold text-white">
+                    <p className="text-2xl font-bold text-valorant-gold">
                       ${stats.averagePrice}
                     </p>
                   </div>
@@ -293,7 +293,7 @@ export default function Dashboard() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-500">Featured</p>
-                    <p className="text-2xl font-bold text-white">
+                    <p className="text-2xl font-bold text-valorant-gold">
                       {stats.featuredCount}
                     </p>
                   </div>
