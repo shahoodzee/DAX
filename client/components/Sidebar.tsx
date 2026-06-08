@@ -53,22 +53,22 @@ export default function Sidebar({ stats }: { stats: SidebarStats }) {
           ))}
         </nav>
 
-        <Card className="mt-8 bg-gradient-to-r from-valorant-purple/20 to-valorant-cyan/20 border-valorant-cyan/30">
+        <Card className="mt-8 bg-gradient-to-r from-gray-800 to-gray-900 border-gray-700">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm text-valorant-gold">Quick Stats</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-xs">
             <div className="flex justify-between">
-              <span className="text-gray-400">Total Listings:</span>
-              <span className="text-white font-bold">{stats.totalListings}</span>
+              <span className="text-gray-500">Total Listings:</span>
+              <span className="text-gray-200 font-bold">{stats.totalListings}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-400">Avg Price:</span>
-              <span className="text-valorant-gold font-bold">${stats.averagePrice}</span>
+              <span className="text-gray-500">Avg Price:</span>
+              <span className="text-gray-200 font-bold">${stats.averagePrice}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-400">Featured:</span>
-              <span className="text-valorant-cyan font-bold">{stats.featuredCount}</span>
+              <span className="text-gray-500">Featured:</span>
+              <span className="text-gray-200 font-bold">{stats.featuredCount}</span>
             </div>
           </CardContent>
         </Card>
