@@ -4,6 +4,8 @@
 
 DAX is a modern marketplace for trading digital game accounts across Valorant, CS:GO, Steam, League of Legends, and Overwatch. Browse listings with rich skin and weapon filters, manage your own inventory, and discover trusted sellers in the community — all in a fast, Valorant-inspired web experience.
 
+> **Notice:** This repository is public for viewing purposes only. Do not use, copy, modify, or deploy this code without explicit permission from the author. See [License](#license).
+
 ---
 
 ## Features
@@ -183,4 +185,8 @@ The repo includes `netlify.toml` for SPA hosting with serverless API functions. 
 
 ## License
 
-Private project — all rights reserved.
+Copyright © Shahood. All rights reserved.
+
+This code is made publicly **viewable** for portfolio/demonstration purposes only. No license is granted to use, copy, modify, merge, publish, distribute, sublicense, deploy, or sell copies of this software, in whole or in part, without explicit prior written permission from the author.
+
+If you'd like to use this project or any part of it, please reach out first to request permission.
