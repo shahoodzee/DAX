@@ -32,50 +32,32 @@ import { toast } from "@/hooks/use-toast";
 import { Plus } from "lucide-react";
 
 const accountTypes = [
-  "Valorant",
-  "CSGO",
-  "Steam",
-  "Fortnite",
-  "League of Legends",
-  "Dota 2",
-  "PUBG",
-  "Apex Legends",
-  "Overwatch",
-  "Rainbow Six Siege",
-  "Genshin Impact",
-  "Roblox",
-  "Minecraft",
-  "Call of Duty",
-  "Rocket League",
-  "Other",
+  { label: "Valorant", value: "Valorant" },
+  { label: "CS2", value: "CS2" },
+  { label: "Fortnite", value: "Fortnite" },
+  { label: "Steam", value: "Steam" },
+  { label: "League of Legends", value: "LeagueOfLegends" },
+  { label: "Overwatch", value: "Overwatch" },
 ] as const;
+
+const accountTypeValues = accountTypes.map((t) => t.value) as unknown as readonly [string, ...string[]];
 
 const gameCurrencies: Record<string, { code: string; label: string }[]> = {
   Valorant: [
     { code: "VP", label: "Valorant Points (VP)" },
     { code: "RAD", label: "Radianite Points (RAD)" },
   ],
-  CSGO: [
+  CS2: [
     { code: "USD", label: "USD" },
     { code: "EUR", label: "EUR" },
   ],
+  Fortnite: [{ code: "VB", label: "V-Bucks (VB)" }],
   Steam: [
     { code: "USD", label: "USD" },
     { code: "EUR", label: "EUR" },
   ],
-  "League of Legends": [{ code: "RP", label: "Riot Points (RP)" }],
-  "Dota 2": [{ code: "USD", label: "USD" }],
-  Fortnite: [{ code: "VB", label: "V-Bucks (VB)" }],
-  PUBG: [{ code: "UC", label: "Unknown Cash (UC)" }],
-  "Apex Legends": [{ code: "AC", label: "Apex Coins (AC)" }],
+  LeagueOfLegends: [{ code: "RP", label: "Riot Points (RP)" }],
   Overwatch: [{ code: "CR", label: "Credits (CR)" }],
-  "Rainbow Six Siege": [{ code: "R6C", label: "R6 Credits (R6C)" }],
-  "Genshin Impact": [{ code: "PG", label: "Primogems (PG)" }],
-  Roblox: [{ code: "R$", label: "Robux (R$)" }],
-  Minecraft: [{ code: "MCC", label: "Minecoins (MCC)" }],
-  "Call of Duty": [{ code: "CP", label: "CoD Points (CP)" }],
-  "Rocket League": [{ code: "CR", label: "Credits (CR)" }],
-  Other: [{ code: "USD", label: "USD" }],
 };
 
 const priceCurrencies = [
@@ -100,7 +82,7 @@ const priceCurrencies = [
 
 const schema = z.object({
   region: z.string().min(1, "Region is required"),
-  accountType: z.enum(accountTypes),
+  accountType: z.enum(accountTypeValues),
   accountName: z.string().min(2, "Enter a valid account name"),
   accountCurrency: z.string().min(1, "Select account currency"),
   currencySpent: z.coerce.number().min(0, "Must be a positive number"),
@@ -271,11 +253,11 @@ export default function CreateAccountModal() {
                         <SelectContent className="bg-gray-800 text-white border-gray-600">
                           {accountTypes.map((t) => (
                             <SelectItem
-                              key={t}
-                              value={t}
+                              key={t.value}
+                              value={t.value}
                               className="text-white"
                             >
-                              {t}
+                              {t.label}
                             </SelectItem>
                           ))}
                         </SelectContent>

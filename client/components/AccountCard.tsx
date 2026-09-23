@@ -11,12 +11,17 @@ interface AccountCardProps {
   index: number;
 }
 
-const gameTypeColors = {
+const gameTypeColors: Record<string, string> = {
   Valorant: "bg-valorant-red text-white",
-  CSGO: "bg-orange-500 text-white",
+  CS2: "bg-orange-500 text-white",
+  Fortnite: "bg-purple-500 text-white",
   Steam: "bg-blue-600 text-white",
-  "League of Legends": "bg-blue-400 text-white",
+  LeagueOfLegends: "bg-blue-400 text-white",
   Overwatch: "bg-orange-400 text-white",
+};
+
+const gameTypeLabels: Record<string, string> = {
+  LeagueOfLegends: "League of Legends",
 };
 
 export default function AccountCard({ account, index }: AccountCardProps) {
@@ -89,7 +94,7 @@ export default function AccountCard({ account, index }: AccountCardProps) {
         </div>
 
         <div className="flex items-center gap-2">
-          <Badge className={gameColor}>{account.accountType}</Badge>
+          <Badge className={gameColor}>{gameTypeLabels[account.accountType] ?? account.accountType}</Badge>
           {account.rank && (
             <Badge
               variant="outline"

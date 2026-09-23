@@ -52,7 +52,7 @@ export default function AdvancedFilter({ accounts, onFiltersChange, currentFilte
     switch (localFilters.gameType) {
       case "Valorant":
         return VALORANT_WEAPONS;
-      case "CSGO":
+      case "CS2":
         return CSGO_WEAPONS;
       default:
         return [...VALORANT_WEAPONS, ...CSGO_WEAPONS];
@@ -168,18 +168,26 @@ export default function AdvancedFilter({ accounts, onFiltersChange, currentFilte
               </CardHeader>
               <CardContent className="space-y-2">
                 <div className="flex flex-wrap gap-2">
-                  {["all", "Valorant", "CSGO", "Steam"].map(gameType => (
+                  {[
+                    { label: "All Games", value: "all" },
+                    { label: "Valorant", value: "Valorant" },
+                    { label: "CS2", value: "CS2" },
+                    { label: "Fortnite", value: "Fortnite" },
+                    { label: "Steam", value: "Steam" },
+                    { label: "League of Legends", value: "LeagueOfLegends" },
+                    { label: "Overwatch", value: "Overwatch" },
+                  ].map(gt => (
                     <Badge
-                      key={gameType}
-                      variant={localFilters.gameType === gameType ? "default" : "outline"}
+                      key={gt.value}
+                      variant={localFilters.gameType === gt.value ? "default" : "outline"}
                       className={`cursor-pointer ${
-                        localFilters.gameType === gameType 
-                          ? "bg-valorant-red text-white" 
+                        localFilters.gameType === gt.value
+                          ? "bg-valorant-red text-white"
                           : "border-gray-600 text-gray-300 hover:bg-gray-700"
                       }`}
-                      onClick={() => handleGameTypeChange(gameType)}
+                      onClick={() => handleGameTypeChange(gt.value)}
                     >
-                      {gameType === "all" ? "All Games" : gameType}
+                      {gt.label}
                     </Badge>
                   ))}
                 </div>

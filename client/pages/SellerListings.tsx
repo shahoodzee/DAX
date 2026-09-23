@@ -48,8 +48,8 @@ export default function SellerListings() {
     const averagePrice = Math.round(
       userAccounts.length ? totalValue / userAccounts.length : 0
     );
-    const listedCount = userAccounts.filter((a) => a.transactionStatus === "listed").length;
-    const soldCount = userAccounts.filter((a) => a.transactionStatus === "sold").length;
+    const listedCount = userAccounts.filter((a) => a.transactionStatus === "Available").length;
+    const soldCount = userAccounts.filter((a) => a.transactionStatus === "Sold").length;
     return { totalValue, averagePrice, listedCount, soldCount };
   }, [userAccounts]);
 

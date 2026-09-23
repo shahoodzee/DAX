@@ -14,9 +14,10 @@ export interface GameAccount {
   accountName: string;
   accountType:
     | "Valorant"
-    | "CSGO"
+    | "CS2"
+    | "Fortnite"
     | "Steam"
-    | "League of Legends"
+    | "LeagueOfLegends"
     | "Overwatch";
   moneySpent: number; // USD
   gameMoneySpent: number;
@@ -32,8 +33,8 @@ export interface GameAccount {
   featured: boolean;
   images: string[];
   description?: string;
-  verificationStatus: "verified" | "pending" | "unverified";
-  transactionStatus: "listed" | "pending" | "sold";
+  verificationStatus: "Verified" | "Pending" | "Rejected";
+  transactionStatus: "Available" | "Pending" | "Sold";
   buyerId?: string;
   buyerName?: string;
   createdAt: Date;

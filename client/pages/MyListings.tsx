@@ -56,13 +56,13 @@ export default function MyListings() {
 
   const statusStats = useMemo(() => {
     const listed = filteredAccounts.filter(
-      (a) => a.transactionStatus === "listed",
+      (a) => a.transactionStatus === "Available",
     ).length;
     const pending = filteredAccounts.filter(
-      (a) => a.transactionStatus === "pending",
+      (a) => a.transactionStatus === "Pending",
     ).length;
     const sold = filteredAccounts.filter(
-      (a) => a.transactionStatus === "sold",
+      (a) => a.transactionStatus === "Sold",
     ).length;
     const totalValue = filteredAccounts.reduce(
       (sum, acc) => sum + acc.price,
@@ -231,7 +231,7 @@ export default function MyListings() {
 
         <main className="p-4 sm:p-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <Card className="bg-gradient-to-r from-valorant-cyan/20 to-valorant-cyan/10 border-valorant-cyan/30">
+            <Card className="bg-gray-900 bg-gradient-to-r from-valorant-cyan/20 to-valorant-cyan/10 border-valorant-cyan/30">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
@@ -245,7 +245,7 @@ export default function MyListings() {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-r from-valorant-gold/20 to-valorant-gold/10 border-valorant-gold/30">
+            <Card className="bg-gray-900 bg-gradient-to-r from-valorant-gold/20 to-valorant-gold/10 border-valorant-gold/30">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
@@ -259,7 +259,7 @@ export default function MyListings() {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-r from-valorant-purple/20 to-valorant-purple/10 border-valorant-purple/30">
+            <Card className="bg-gray-900 bg-gradient-to-r from-valorant-purple/20 to-valorant-purple/10 border-valorant-purple/30">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
@@ -273,7 +273,7 @@ export default function MyListings() {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-r from-valorant-red/20 to-valorant-red/10 border-valorant-red/30">
+            <Card className="bg-gray-900 bg-gradient-to-r from-valorant-red/20 to-valorant-red/10 border-valorant-red/30">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>

@@ -2,36 +2,88 @@ import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import AccountCard from "@/components/AccountCard";
 import { useMemo, useState } from "react";
-import { sampleAccounts } from "@/data/sampleData";
+import { useQuery } from "@tanstack/react-query";
+import { fetchGameAccounts } from "@/lib/api";
+import type { ApiGameAccount } from "@/lib/api";
+import type { GameAccount } from "@shared/types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, Filter } from "lucide-react";
+import { Search, Filter, Loader2 } from "lucide-react";
+
+function toGameAccount(a: ApiGameAccount): GameAccount {
+  return {
+    id: String(a.id),
+    accountName: a.accountName,
+    accountType: a.accountType as GameAccount["accountType"],
+    moneySpent: a.moneySpent,
+    gameMoneySpent: a.gameMoneySpent,
+    gameCurrency: a.gameCurrency,
+    numberOfSkins: a.numberOfSkins,
+    accountLink: a.accountLink,
+    skins: a.skins.map((s) => ({
+      id: String(s.id),
+      name: s.name,
+      weaponType: s.weaponType,
+      skinType: s.skinType,
+      price: s.price,
+      currency: s.currency,
+      imageUrl: s.imageUrl,
+      rarity: s.rarity,
+    })),
+    rank: a.rank,
+    level: a.level,
+    sellerId: String(a.sellerId),
+    sellerName: a.sellerName,
+    price: a.price,
+    featured: a.featured,
+    images: a.images,
+    description: a.description,
+    verificationStatus: a.verificationStatus as GameAccount["verificationStatus"],
+    transactionStatus: a.transactionStatus as GameAccount["transactionStatus"],
+    buyerId: a.buyerId ? String(a.buyerId) : undefined,
+    buyerName: a.buyerName,
+    createdAt: new Date(a.createdDate),
+    lastUpdated: new Date(a.lastUpdated),
+  };
+}
 
 export default function Marketplace() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGameType, setSelectedGameType] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["gameAccounts", searchQuery, selectedGameType],
+    queryFn: () =>
+      fetchGameAccounts({
+        searchTerm: searchQuery || undefined,
+        accountType: selectedGameType || undefined,
+        transactionStatus: "Available",
+      }),
+  });
+
+  const accounts = useMemo(
+    () => (data?.data?.items ?? []).map(toGameAccount),
+    [data],
+  );
+  const totalCount = data?.data?.totalCount ?? 0;
+
   const stats = useMemo(() => {
-    const totalListings = sampleAccounts.length;
-    const totalValue = sampleAccounts.reduce((s, a) => s + a.price, 0);
+    const totalListings = totalCount;
+    const totalValue = accounts.reduce((s, a) => s + a.price, 0);
     const averagePrice = Math.round(totalListings ? totalValue / totalListings : 0);
-    const featuredCount = sampleAccounts.filter((a) => a.featured).length;
+    const featuredCount = accounts.filter((a) => a.featured).length;
     return { totalListings, averagePrice, featuredCount };
-  }, []);
+  }, [accounts, totalCount]);
 
-  const filteredAccounts = useMemo(() => {
-    return sampleAccounts.filter((account) => {
-      const matchesSearch =
-        account.accountName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        account.sellerName.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesGameType = !selectedGameType || account.accountType === selectedGameType;
-      const isListed = account.transactionStatus === "listed";
-      return matchesSearch && matchesGameType && isListed;
-    });
-  }, [searchQuery, selectedGameType]);
-
-  const gameTypes = Array.from(new Set(sampleAccounts.map((a) => a.accountType)));
+  const gameTypes = [
+    { label: "Valorant", value: "Valorant" },
+    { label: "CS2", value: "CS2" },
+    { label: "Fortnite", value: "Fortnite" },
+    { label: "Steam", value: "Steam" },
+    { label: "League of Legends", value: "LeagueOfLegends" },
+    { label: "Overwatch", value: "Overwatch" },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-valorant-dark text-white">
@@ -71,18 +123,18 @@ export default function Marketplace() {
               >
                 All Games
               </Button>
-              {gameTypes.map((gameType) => (
+              {gameTypes.map((gt) => (
                 <Button
-                  key={gameType}
-                  variant={selectedGameType === gameType ? "default" : "outline"}
-                  onClick={() => setSelectedGameType(gameType)}
+                  key={gt.value}
+                  variant={selectedGameType === gt.value ? "default" : "outline"}
+                  onClick={() => setSelectedGameType(gt.value)}
                   className={
-                    selectedGameType === gameType
+                    selectedGameType === gt.value
                       ? "valorant-gradient"
                       : "border-gray-600 text-gray-300 hover:bg-gray-700"
                   }
                 >
-                  {gameType}
+                  {gt.label}
                 </Button>
               ))}
             </div>
@@ -91,24 +143,43 @@ export default function Marketplace() {
           {/* Results Info */}
           <div className="mb-6">
             <p className="text-gray-400">
-              Showing {filteredAccounts.length} of {sampleAccounts.filter((a) => a.transactionStatus === "listed").length} available accounts
+              Showing {accounts.length} of {totalCount} available accounts
             </p>
           </div>
 
+          {/* Loading State */}
+          {isLoading && (
+            <div className="text-center py-12">
+              <Loader2 className="w-8 h-8 text-valorant-cyan mx-auto mb-4 animate-spin" />
+              <p className="text-gray-400">Loading accounts...</p>
+            </div>
+          )}
+
+          {/* Error State */}
+          {isError && (
+            <div className="text-center py-12">
+              <p className="text-red-400 mb-2">Failed to load accounts</p>
+              <p className="text-gray-500 text-sm">Make sure the API server is running</p>
+            </div>
+          )}
+
           {/* Accounts Grid */}
-          {filteredAccounts.length > 0 ? (
+          {!isLoading && !isError && accounts.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredAccounts.map((account, index) => (
+              {accounts.map((account, index) => (
                 <AccountCard key={account.id} account={account} index={index} />
               ))}
             </div>
-          ) : (
+          )}
+
+          {!isLoading && !isError && accounts.length === 0 && (
             <div className="text-center py-12">
               <Filter className="w-12 h-12 text-gray-500 mx-auto mb-4" />
               <p className="text-gray-400 mb-2">No accounts found</p>
               <p className="text-gray-500 text-sm">Try adjusting your search or filters</p>
             </div>
           )}
+
         </main>
       </div>
     </div>

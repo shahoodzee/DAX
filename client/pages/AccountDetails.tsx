@@ -39,12 +39,14 @@ export default function AccountDetails() {
 
   const gameTypeColors: Record<string, string> = {
     Valorant: "bg-valorant-red text-white",
-    CSGO: "bg-orange-500 text-white",
+    CS2: "bg-orange-500 text-white",
+    Fortnite: "bg-purple-500 text-white",
     Steam: "bg-blue-600 text-white",
-    "League of Legends": "bg-blue-400 text-white",
+    LeagueOfLegends: "bg-blue-400 text-white",
     Overwatch: "bg-orange-400 text-white",
   };
 
+  const gameTypeLabels: Record<string, string> = { LeagueOfLegends: "League of Legends" };
   const gameColor = gameTypeColors[account.accountType] || "bg-gray-500 text-white";
 
   const handleCommentSubmit = () => {
@@ -69,7 +71,7 @@ export default function AccountDetails() {
                   {account.accountName}
                 </h1>
                 <div className="flex flex-wrap gap-2">
-                  <Badge className={gameColor}>{account.accountType}</Badge>
+                  <Badge className={gameColor}>{gameTypeLabels[account.accountType] ?? account.accountType}</Badge>
                   {account.rank && (
                     <Badge variant="outline" className="border-valorant-purple text-valorant-purple">
                       {account.rank}
@@ -78,9 +80,9 @@ export default function AccountDetails() {
                   <Badge
                     variant="outline"
                     className={`${
-                      account.verificationStatus === "verified"
+                      account.verificationStatus === "Verified"
                         ? "border-green-500 text-green-400"
-                        : account.verificationStatus === "pending"
+                        : account.verificationStatus === "Pending"
                           ? "border-yellow-500 text-yellow-400"
                           : "border-red-500 text-red-400"
                     }`}
@@ -392,9 +394,9 @@ export default function AccountDetails() {
                     <Badge
                       variant="outline"
                       className={`${
-                        account.transactionStatus === "listed"
+                        account.transactionStatus === "Available"
                           ? "border-green-500 text-green-400"
-                          : account.transactionStatus === "pending"
+                          : account.transactionStatus === "Pending"
                             ? "border-yellow-500 text-yellow-400"
                             : "border-gray-500 text-gray-300"
                       }`}
