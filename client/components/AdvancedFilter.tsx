@@ -334,18 +334,18 @@ export default function AdvancedFilter({ accounts, onFiltersChange, currentFilte
         
         {/* Action Buttons */}
         <div className="flex justify-between pt-4 flex-shrink-0">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={clearFilters}
-            className="border-gray-600 text-gray-300 hover:bg-gray-700"
+            className="bg-gray-800 border-gray-600 text-gray-300 hover:bg-gray-700"
           >
             Clear All
           </Button>
           <div className="flex gap-2">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={() => setIsOpen(false)}
-              className="border-gray-600 text-gray-300 hover:bg-gray-700"
+              className="bg-gray-800 border-gray-600 text-gray-300 hover:bg-gray-700"
             >
               Cancel
             </Button>
