@@ -1,6 +1,8 @@
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import AccountCard from "@/components/AccountCard";
+import AdvancedFilter, { FilterState } from "@/components/AdvancedFilter";
+import { applyAdvancedFilters, getFilterSummary, hasActiveFilters } from "@/utils/filterUtils";
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchGameAccounts } from "@/lib/api";
@@ -8,7 +10,8 @@ import type { ApiGameAccount } from "@/lib/api";
 import type { GameAccount } from "@shared/types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, Filter, Loader2 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Search, Filter, Loader2, X } from "lucide-react";
 
 function toGameAccount(a: ApiGameAccount): GameAccount {
   return {
@@ -51,22 +54,38 @@ export default function Marketplace() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGameType, setSelectedGameType] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [advancedFilters, setAdvancedFilters] = useState<FilterState>({
+    gameType: "all",
+    weaponTypes: [],
+    skinTypes: [],
+    specificCombinations: [],
+    searchTerm: "",
+  });
+
+  const effectiveGameType = advancedFilters.gameType !== "all" ? advancedFilters.gameType : selectedGameType;
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["gameAccounts", searchQuery, selectedGameType],
+    queryKey: ["gameAccounts", searchQuery, effectiveGameType],
     queryFn: () =>
       fetchGameAccounts({
         searchTerm: searchQuery || undefined,
-        accountType: selectedGameType || undefined,
+        accountType: effectiveGameType || undefined,
         transactionStatus: "Available",
       }),
   });
 
-  const accounts = useMemo(
+  const allAccounts = useMemo(
     () => (data?.data?.items ?? []).map(toGameAccount),
     [data],
   );
   const totalCount = data?.data?.totalCount ?? 0;
+
+  const accounts = useMemo(
+    () => hasActiveFilters(advancedFilters)
+      ? applyAdvancedFilters(allAccounts, advancedFilters)
+      : allAccounts,
+    [allAccounts, advancedFilters],
+  );
 
   const stats = useMemo(() => {
     const totalListings = totalCount;
@@ -75,6 +94,23 @@ export default function Marketplace() {
     const featuredCount = accounts.filter((a) => a.featured).length;
     return { totalListings, averagePrice, featuredCount };
   }, [accounts, totalCount]);
+
+  const handleAdvancedFiltersChange = (filters: FilterState) => {
+    setAdvancedFilters(filters);
+    if (filters.gameType !== "all") {
+      setSelectedGameType(filters.gameType);
+    }
+  };
+
+  const clearAdvancedFilters = () => {
+    setAdvancedFilters({
+      gameType: "all",
+      weaponTypes: [],
+      skinTypes: [],
+      specificCombinations: [],
+      searchTerm: "",
+    });
+  };
 
   const gameTypes = [
     { label: "Valorant", value: "Valorant" },
@@ -108,17 +144,22 @@ export default function Marketplace() {
                   className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-400"
                 />
               </div>
+              <AdvancedFilter
+                accounts={accounts}
+                onFiltersChange={handleAdvancedFiltersChange}
+                currentFilters={advancedFilters}
+              />
             </div>
 
             {/* Game Type Filter */}
             <div className="flex flex-wrap gap-2">
               <Button
                 variant={selectedGameType === null ? "default" : "outline"}
-                onClick={() => setSelectedGameType(null)}
+                onClick={() => { setSelectedGameType(null); setAdvancedFilters(f => ({ ...f, gameType: "all" })); }}
                 className={
                   selectedGameType === null
                     ? "valorant-gradient"
-                    : "border-gray-600 text-gray-300 hover:bg-gray-700"
+                    : "bg-gray-800 border-gray-600 text-gray-300 hover:bg-gray-700"
                 }
               >
                 All Games
@@ -127,23 +168,47 @@ export default function Marketplace() {
                 <Button
                   key={gt.value}
                   variant={selectedGameType === gt.value ? "default" : "outline"}
-                  onClick={() => setSelectedGameType(gt.value)}
+                  onClick={() => { setSelectedGameType(gt.value); setAdvancedFilters(f => ({ ...f, gameType: gt.value })); }}
                   className={
                     selectedGameType === gt.value
                       ? "valorant-gradient"
-                      : "border-gray-600 text-gray-300 hover:bg-gray-700"
+                      : "bg-gray-800 border-gray-600 text-gray-300 hover:bg-gray-700"
                   }
                 >
                   {gt.label}
                 </Button>
               ))}
             </div>
+
+            {/* Active Filter Summary */}
+            {hasActiveFilters(advancedFilters) && (
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-sm text-gray-400">Active filters:</span>
+                {getFilterSummary(advancedFilters).map((summary) => (
+                  <Badge key={summary} variant="outline" className="border-valorant-cyan text-valorant-cyan">
+                    {summary}
+                  </Badge>
+                ))}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={clearAdvancedFilters}
+                  className="text-gray-400 hover:text-white"
+                >
+                  <X className="w-3 h-3 mr-1" />
+                  Clear all
+                </Button>
+              </div>
+            )}
           </div>
 
           {/* Results Info */}
           <div className="mb-6">
             <p className="text-gray-400">
               Showing {accounts.length} of {totalCount} available accounts
+              {hasActiveFilters(advancedFilters) && accounts.length !== allAccounts.length && (
+                <span> ({allAccounts.length} matched API, {accounts.length} after filters)</span>
+              )}
             </p>
           </div>
 
