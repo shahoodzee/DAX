@@ -1,3 +1,5 @@
+import type { GameAccount } from "@shared/types";
+
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:5277";
 
 export async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
@@ -78,4 +80,45 @@ export function fetchGameAccounts(params: GetGameAccountsParams = {}) {
   if (params.sellerId !== undefined) qs.set("sellerId", String(params.sellerId));
 
   return apiFetch<ApiResponse<PagedGameAccountsResponse>>(`/api/GameAccounts?${qs}`);
+}
+
+export function fetchGameAccount(id: string) {
+  return apiFetch<ApiResponse<ApiGameAccount>>(`/api/GameAccounts/${id}`);
+}
+
+export function toGameAccount(a: ApiGameAccount): GameAccount {
+  return {
+    id: String(a.id),
+    accountName: a.accountName,
+    accountType: a.accountType as GameAccount["accountType"],
+    moneySpent: a.moneySpent,
+    gameMoneySpent: a.gameMoneySpent,
+    gameCurrency: a.gameCurrency,
+    numberOfSkins: a.numberOfSkins,
+    accountLink: a.accountLink,
+    skins: a.skins.map((s) => ({
+      id: String(s.id),
+      name: s.name,
+      weaponType: s.weaponType,
+      skinType: s.skinType,
+      price: s.price,
+      currency: s.currency,
+      imageUrl: s.imageUrl,
+      rarity: s.rarity,
+    })),
+    rank: a.rank,
+    level: a.level,
+    sellerId: String(a.sellerId),
+    sellerName: a.sellerName,
+    price: a.price,
+    featured: a.featured,
+    images: a.images,
+    description: a.description,
+    verificationStatus: a.verificationStatus as GameAccount["verificationStatus"],
+    transactionStatus: a.transactionStatus as GameAccount["transactionStatus"],
+    buyerId: a.buyerId ? String(a.buyerId) : undefined,
+    buyerName: a.buyerName,
+    createdAt: new Date(a.createdDate),
+    lastUpdated: new Date(a.lastUpdated),
+  };
 }
