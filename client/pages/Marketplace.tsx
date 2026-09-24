@@ -5,50 +5,12 @@ import AdvancedFilter, { FilterState } from "@/components/AdvancedFilter";
 import { applyAdvancedFilters, getFilterSummary, hasActiveFilters } from "@/utils/filterUtils";
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchGameAccounts } from "@/lib/api";
-import type { ApiGameAccount } from "@/lib/api";
+import { fetchGameAccounts, toGameAccount } from "@/lib/api";
 import type { GameAccount } from "@shared/types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Search, Filter, Loader2, X } from "lucide-react";
-
-function toGameAccount(a: ApiGameAccount): GameAccount {
-  return {
-    id: String(a.id),
-    accountName: a.accountName,
-    accountType: a.accountType as GameAccount["accountType"],
-    moneySpent: a.moneySpent,
-    gameMoneySpent: a.gameMoneySpent,
-    gameCurrency: a.gameCurrency,
-    numberOfSkins: a.numberOfSkins,
-    accountLink: a.accountLink,
-    skins: a.skins.map((s) => ({
-      id: String(s.id),
-      name: s.name,
-      weaponType: s.weaponType,
-      skinType: s.skinType,
-      price: s.price,
-      currency: s.currency,
-      imageUrl: s.imageUrl,
-      rarity: s.rarity,
-    })),
-    rank: a.rank,
-    level: a.level,
-    sellerId: String(a.sellerId),
-    sellerName: a.sellerName,
-    price: a.price,
-    featured: a.featured,
-    images: a.images,
-    description: a.description,
-    verificationStatus: a.verificationStatus as GameAccount["verificationStatus"],
-    transactionStatus: a.transactionStatus as GameAccount["transactionStatus"],
-    buyerId: a.buyerId ? String(a.buyerId) : undefined,
-    buyerName: a.buyerName,
-    createdAt: new Date(a.createdDate),
-    lastUpdated: new Date(a.lastUpdated),
-  };
-}
 
 export default function Marketplace() {
   const [searchQuery, setSearchQuery] = useState("");

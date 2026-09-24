@@ -1,5 +1,7 @@
 import { useParams, Navigate } from "react-router-dom";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchGameAccount, toGameAccount } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import { sampleAccounts, mockComments, mockNotifications } from "@/data/sampleData";
@@ -17,7 +19,14 @@ import { Send, MessageCircle, Bell, Calendar, DollarSign, MapPin, Zap, User } fr
 
 export default function AccountDetails() {
   const { id } = useParams<{ id: string }>();
-  const account = sampleAccounts.find((a) => a.id === id);
+  const sampleAccount = sampleAccounts.find((a) => a.id === id);
+  const { data, isLoading } = useQuery({
+    queryKey: ["gameAccount", id],
+    queryFn: () => fetchGameAccount(id!),
+    enabled: !!id && !sampleAccount,
+    retry: false,
+  });
+  const account = sampleAccount ?? (data?.data ? toGameAccount(data.data) : undefined);
   const [newComment, setNewComment] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -29,6 +38,14 @@ export default function AccountDetails() {
     ),
     featuredCount: sampleAccounts.filter((a) => a.featured).length,
   };
+
+  if (!account && isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-900 text-gray-400 flex items-center justify-center">
+        Loading account...
+      </div>
+    );
+  }
 
   if (!account) {
     return <Navigate to="/marketplace" replace />;
