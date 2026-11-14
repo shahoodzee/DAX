@@ -15,13 +15,13 @@ import {
   getFilterSummary,
   hasActiveFilters,
 } from "@/utils/filterUtils";
-import { getCurrentUser } from "@/lib/auth";
+import { useAuth } from "@/context/AuthContext";
 
 export default function MyListings() {
-  const user = getCurrentUser();
+  const { user } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
   const [accounts] = useState<GameAccount[]>(
-    sampleAccounts.filter((a) => a.sellerId === user.id),
+    sampleAccounts.filter((a) => a.sellerId === user?.id),
   );
   const [displayedAccounts, setDisplayedAccounts] = useState<GameAccount[]>([]);
   const [displayedAccountIds, setDisplayedAccountIds] = useState<Set<string>>(

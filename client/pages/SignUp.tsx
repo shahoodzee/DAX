@@ -49,15 +49,19 @@ export default function SignUp() {
     }
     setLoading(true);
     try {
-      const profile = {
-        firstName,
-        lastName,
-        username,
-        phone: `${phoneCode} ${phoneNumber}`,
-        dob,
-      };
-      console.info("[mock] register profile", profile);
-      const { error } = await supabase.auth.signUp({ email, password });
+const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            first_name: firstName,
+            last_name: lastName,
+            username,
+            phone: `${phoneCode} ${phoneNumber}`,
+            dob,
+          },
+        },
+      });
       if (error) throw error;
       toast({ title: "Account created", description: "Welcome aboard!" });
       navigate("/");
