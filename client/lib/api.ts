@@ -86,6 +86,13 @@ export function fetchGameAccount(id: string) {
   return apiFetch<ApiResponse<ApiGameAccount>>(`/api/GameAccounts/${id}`);
 }
 
+export function fetchMyListings(token: string, page = 1, pageSize = 100) {
+  return apiFetch<ApiResponse<PagedGameAccountsResponse>>(
+    `/api/GameAccounts/my-listings?page=${page}&pageSize=${pageSize}`,
+    { headers: { Authorization: `Bearer ${token}` } },
+  );
+}
+
 export function toGameAccount(a: ApiGameAccount): GameAccount {
   return {
     id: String(a.id),

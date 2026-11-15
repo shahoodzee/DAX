@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { Search, TrendingUp, Grid3X3, CheckCircle2, Clock } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,7 +9,6 @@ import AccountCard from "@/components/AccountCard";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import AdvancedFilter, { FilterState } from "@/components/AdvancedFilter";
-import { sampleAccounts } from "@/data/sampleData";
 import { GameAccount } from "@shared/types";
 import {
   applyAdvancedFilters,
@@ -16,13 +16,19 @@ import {
   hasActiveFilters,
 } from "@/utils/filterUtils";
 import { useAuth } from "@/context/AuthContext";
+import { fetchMyListings, toGameAccount } from "@/lib/api";
 
 export default function MyListings() {
-  const { user } = useAuth();
+  const { session } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
-  const [accounts] = useState<GameAccount[]>(
-    sampleAccounts.filter((a) => a.sellerId === user?.id),
-  );
+
+  const { data: apiData } = useQuery({
+    queryKey: ["my-listings", session?.access_token],
+    queryFn: () => fetchMyListings(session!.access_token),
+    enabled: !!session?.access_token,
+  });
+
+  const accounts: GameAccount[] = (apiData?.data?.items ?? []).map(toGameAccount);
   const [displayedAccounts, setDisplayedAccounts] = useState<GameAccount[]>([]);
   const [displayedAccountIds, setDisplayedAccountIds] = useState<Set<string>>(
     new Set(),
