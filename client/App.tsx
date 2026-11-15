@@ -20,6 +20,7 @@ import Profile from "./pages/Profile";
 import Account from "./pages/Account";
 import AccountDetails from "./pages/AccountDetails";
 import SellerListings from "./pages/SellerListings";
+import DashboardPage from "./pages/Dashboard";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +32,7 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/dashboard" element={<Index />} />
+              <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
               <Route path="/marketplace" element={<Marketplace />} />
               <Route path="/account/:id" element={<AccountDetails />} />
               <Route path="/community" element={<Community />} />

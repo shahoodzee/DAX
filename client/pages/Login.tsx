@@ -31,7 +31,7 @@ export default function Login() {
       });
       if (error) throw error;
       toast({ title: "Welcome back", description: "Signed in successfully" });
-      navigate("/");
+      navigate("/dashboard");
     } catch (err: any) {
       toast({
         title: "Sign in failed",
