@@ -33,10 +33,10 @@ function App() {
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
-              <Route path="/marketplace" element={<Marketplace />} />
-              <Route path="/account/:id" element={<AccountDetails />} />
-              <Route path="/community" element={<Community />} />
-              <Route path="/community/:userId" element={<SellerListings />} />
+              <Route path="/marketplace" element={<ProtectedRoute><Marketplace /></ProtectedRoute>} />
+              <Route path="/account/:id" element={<ProtectedRoute><AccountDetails /></ProtectedRoute>} />
+              <Route path="/community" element={<ProtectedRoute><Community /></ProtectedRoute>} />
+              <Route path="/community/:userId" element={<ProtectedRoute><SellerListings /></ProtectedRoute>} />
               <Route path="/login" element={<Login />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/auth/callback" element={<AuthCallback />} />
