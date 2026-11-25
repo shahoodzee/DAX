@@ -125,7 +125,7 @@ export default function Community() {
         <main className="p-6">
           {/* Header Section */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold mb-2 text-valorant-cyan">Community</h1>
+            <h1 className="text-3xl font-bold mb-2 text-white">Community</h1>
             <p className="text-gray-400">
               Discover and connect with sellers who have listed game accounts
             </p>

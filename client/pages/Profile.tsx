@@ -3,6 +3,8 @@ import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { sampleAccounts } from "@/data/sampleData";
 import { Save } from "lucide-react";
 import { useUser } from "@/lib/auth";
@@ -108,7 +110,7 @@ export default function Profile() {
 
           <Card className="bg-gray-800 border-gray-700">
             <CardHeader className="flex flex-row items-center justify-between pb-4">
-              <CardTitle className="text-xl">User Information</CardTitle>
+              <CardTitle className="text-xl text-white">User Information</CardTitle>
               {!isEditing && (
                 <Button
                   onClick={() => setIsEditing(true)}
@@ -120,100 +122,88 @@ export default function Profile() {
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    First Name
-                  </label>
-                  <input
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-300">First Name</label>
+                  <Input
                     type="text"
                     name="firstName"
                     value={displayProfile.firstName}
                     onChange={handleInputChange}
                     disabled={!isEditing}
-                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="bg-gray-800 border-gray-600 text-white"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Last Name
-                  </label>
-                  <input
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-300">Last Name</label>
+                  <Input
                     type="text"
                     name="lastName"
                     value={displayProfile.lastName}
                     onChange={handleInputChange}
                     disabled={!isEditing}
-                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="bg-gray-800 border-gray-600 text-white"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Username
-                  </label>
-                  <input
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-300">Username</label>
+                  <Input
                     type="text"
                     name="username"
                     value={displayProfile.username}
                     onChange={handleInputChange}
                     disabled={!isEditing}
-                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="bg-gray-800 border-gray-600 text-white"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Email
-                  </label>
-                  <input
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-300">Email</label>
+                  <Input
                     type="email"
                     name="email"
                     value={displayProfile.email}
                     onChange={handleInputChange}
                     disabled={!isEditing}
-                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="bg-gray-800 border-gray-600 text-white"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Phone
-                  </label>
-                  <input
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-300">Phone</label>
+                  <Input
                     type="tel"
                     name="phone"
                     value={displayProfile.phone}
                     onChange={handleInputChange}
                     disabled={!isEditing}
-                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="bg-gray-800 border-gray-600 text-white"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Country
-                  </label>
-                  <input
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-300">Country</label>
+                  <Input
                     type="text"
                     name="country"
                     value={displayProfile.country}
                     onChange={handleInputChange}
                     disabled={!isEditing}
-                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="bg-gray-800 border-gray-600 text-white"
                   />
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Bio</label>
-                <textarea
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-300">Bio</label>
+                <Textarea
                   name="bio"
                   value={displayProfile.bio}
                   onChange={handleInputChange}
                   disabled={!isEditing}
                   rows={4}
-                  className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-valorant-red focus:outline-none disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="bg-gray-800 border-gray-600 text-white"
                 />
               </div>
 

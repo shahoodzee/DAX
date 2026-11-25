@@ -140,6 +140,45 @@ export function createUser(payload: CreateUserPayload) {
   });
 }
 
+export function fetchCurrentUser(token: string) {
+  return apiFetch<ApiResponse<{ id: number; email: string; firstName: string; lastName: string }>>("/api/Users/details", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
+export interface CommentDto {
+  id: number;
+  gameAccountId: number;
+  authorId: number;
+  authorName: string;
+  content: string;
+  parentCommentId?: number;
+  isEdited: boolean;
+  createdDate: string;
+  modifiedDate?: string;
+}
+
+export interface CommentsListResponse {
+  comments: CommentDto[];
+  totalCount: number;
+  page: number;
+  pageSize: number;
+}
+
+export function fetchComments(gameAccountId: string | number, page = 1, pageSize = 20) {
+  return apiFetch<ApiResponse<CommentsListResponse>>(
+    `/api/Comments/account/${gameAccountId}?page=${page}&pageSize=${pageSize}`,
+  );
+}
+
+export function createComment(token: string, gameAccountId: number, content: string) {
+  return apiFetch<ApiResponse<CommentDto>>("/api/Comments", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body: JSON.stringify({ gameAccountId, content }),
+  });
+}
+
 export function fetchMyListings(token: string, page = 1, pageSize = 100) {
   return apiFetch<ApiResponse<PagedGameAccountsResponse>>(
     `/api/GameAccounts/my-listings?page=${page}&pageSize=${pageSize}`,

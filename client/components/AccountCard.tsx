@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 interface AccountCardProps {
   account: GameAccount;
   index: number;
+  isOwner?: boolean;
 }
 
 const gameTypeColors: Record<string, string> = {
@@ -24,7 +25,7 @@ const gameTypeLabels: Record<string, string> = {
   LeagueOfLegends: "League of Legends",
 };
 
-export default function AccountCard({ account, index }: AccountCardProps) {
+export default function AccountCard({ account, index, isOwner = false }: AccountCardProps) {
   const navigate = useNavigate();
   const gameColor =
     gameTypeColors[account.accountType] || "bg-gray-500 text-white";
@@ -193,13 +194,15 @@ export default function AccountCard({ account, index }: AccountCardProps) {
               <Eye className="w-4 h-4 mr-1" />
               View
             </Button>
-            <Button
-              size="sm"
-              className="valorant-gradient hover:opacity-90 flex-1 sm:flex-none"
-            >
-              <TrendingUp className="w-4 h-4 mr-1" />
-              Buy Now
-            </Button>
+            {!isOwner && (
+              <Button
+                size="sm"
+                className="valorant-gradient hover:opacity-90 flex-1 sm:flex-none"
+              >
+                <TrendingUp className="w-4 h-4 mr-1" />
+                Buy Now
+              </Button>
+            )}
           </div>
         </div>
 
@@ -207,8 +210,9 @@ export default function AccountCard({ account, index }: AccountCardProps) {
         <Button
           variant="ghost"
           size="sm"
-          className="w-full text-gray-400 hover:text-white hover:bg-gray-800"
-          onClick={() => window.open(account.accountLink, "_blank")}
+          disabled={isOwner}
+          className="w-full text-gray-400 hover:text-white hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed"
+          onClick={() => !isOwner && window.open(account.accountLink, "_blank")}
         >
           <ExternalLink className="w-4 h-4 mr-2" />
           View Account Profile

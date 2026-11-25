@@ -22,7 +22,7 @@ export default function MyListings() {
   const { session } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { data: apiData } = useQuery({
+  const { data: apiData, isError, error } = useQuery({
     queryKey: ["my-listings", session?.access_token],
     queryFn: () => fetchMyListings(session!.access_token),
     enabled: !!session?.access_token,
@@ -129,14 +129,12 @@ export default function MyListings() {
   );
 
   useEffect(() => {
-    setDisplayedAccounts([]);
-    setDisplayedAccountIds(new Set());
-    setPage(1);
-    setHasMore(true);
-    setIsFirstLoad(true);
-    setTimeout(() => {
-      loadMoreAccounts(1, new Set(), filteredAccounts, true);
-    }, 0);
+    const initial = filteredAccounts.slice(0, INITIAL_ACCOUNTS_COUNT);
+    setDisplayedAccounts(initial);
+    setDisplayedAccountIds(new Set(initial.map((a) => a.id)));
+    setPage(2);
+    setHasMore(filteredAccounts.length > INITIAL_ACCOUNTS_COUNT);
+    setIsFirstLoad(false);
   }, [searchTerm, filters, accounts]);
 
   useEffect(() => {
@@ -310,6 +308,7 @@ export default function MyListings() {
                 key={`${account.id}-${index}`}
                 account={account}
                 index={index}
+                isOwner
               />
             ))}
           </div>
@@ -335,7 +334,14 @@ export default function MyListings() {
             </div>
           )}
 
-          {filteredAccounts.length === 0 && (
+          {isError && (
+            <div className="text-center py-12">
+              <p className="text-red-400 font-medium">Failed to load listings</p>
+              <p className="text-gray-400 text-sm mt-1">{(error as Error)?.message}</p>
+            </div>
+          )}
+
+          {!isError && filteredAccounts.length === 0 && (
             <div className="text-center py-12">
               <div className="w-16 h-16 mx-auto mb-4 bg-gray-800 rounded-full flex items-center justify-center">
                 <Search className="w-8 h-8 text-gray-400" />

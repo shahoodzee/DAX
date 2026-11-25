@@ -50,7 +50,7 @@ export default function Navbar({
             <Button
               variant="outline"
               size="sm"
-              className="border-gray-500 bg-transparent text-white-700 hover:bg-gray-400 hover:text-white"
+              className="border-gray-500 bg-transparent text-white hover:bg-gray-700 hover:text-white"
             >
               <Bell className="w-4 h-4" />
             </Button>
@@ -60,7 +60,7 @@ export default function Navbar({
                 <Button
                   variant="outline"
                   size="sm"
-                  className="border-gray-500 bg-transparent text-white-700 hover:bg-gray-400 hover:text-white"
+                  className="border-gray-500 bg-transparent text-white hover:bg-gray-700 hover:text-white"
                 >
                   <User className="w-4 h-4" />
                   {displayName}

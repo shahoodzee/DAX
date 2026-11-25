@@ -1,10 +1,11 @@
 import { useParams, Navigate } from "react-router-dom";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchGameAccount, toGameAccount } from "@/lib/api";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { fetchGameAccount, toGameAccount, fetchCurrentUser, fetchComments, createComment } from "@/lib/api";
+import { useAuth } from "@/context/AuthContext";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
-import { sampleAccounts, mockComments, mockNotifications } from "@/data/sampleData";
+import { sampleAccounts } from "@/data/sampleData";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -15,10 +16,11 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
-import { Send, MessageCircle, Bell, Calendar, DollarSign, MapPin, Zap, User } from "lucide-react";
+import { Send, MessageCircle, Bell, Calendar, DollarSign, MapPin, User } from "lucide-react";
 
 export default function AccountDetails() {
   const { id } = useParams<{ id: string }>();
+  const { session } = useAuth();
   const sampleAccount = sampleAccounts.find((a) => a.id === id);
   const { data, isLoading } = useQuery({
     queryKey: ["gameAccount", id],
@@ -26,9 +28,32 @@ export default function AccountDetails() {
     enabled: !!id && !sampleAccount,
     retry: false,
   });
+  const { data: meData } = useQuery({
+    queryKey: ["currentUser", session?.access_token],
+    queryFn: () => fetchCurrentUser(session!.access_token),
+    enabled: !!session?.access_token,
+  });
   const account = sampleAccount ?? (data?.data ? toGameAccount(data.data) : undefined);
+  const isOwner = !!meData?.data && !!account && meData.data.id === Number(account.sellerId);
+  const queryClient = useQueryClient();
   const [newComment, setNewComment] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const accountId = account ? Number(account.id) : 0;
+  const { data: commentsData } = useQuery({
+    queryKey: ["comments", accountId],
+    queryFn: () => fetchComments(accountId),
+    enabled: accountId > 0,
+  });
+  const comments = commentsData?.data?.comments ?? [];
+
+  const submitComment = useMutation({
+    mutationFn: (content: string) => createComment(session!.access_token, accountId, content),
+    onSuccess: () => {
+      setNewComment("");
+      queryClient.invalidateQueries({ queryKey: ["comments", accountId] });
+    },
+  });
 
   const stats = {
     totalListings: sampleAccounts.length,
@@ -51,9 +76,6 @@ export default function AccountDetails() {
     return <Navigate to="/marketplace" replace />;
   }
 
-  const comments = mockComments[account.id] || [];
-  const notifications = mockNotifications[account.id] || [];
-
   const gameTypeColors: Record<string, string> = {
     Valorant: "bg-valorant-red text-white",
     CS2: "bg-orange-500 text-white",
@@ -67,9 +89,8 @@ export default function AccountDetails() {
   const gameColor = gameTypeColors[account.accountType] || "bg-gray-500 text-white";
 
   const handleCommentSubmit = () => {
-    if (newComment.trim()) {
-      // Mock comment submission - in real app, would save to backend
-      setNewComment("");
+    if (newComment.trim() && session?.access_token) {
+      submitComment.mutate(newComment.trim());
     }
   };
 
@@ -112,14 +133,17 @@ export default function AccountDetails() {
               <div className="flex gap-2">
                 <Button
                   variant="outline"
-                  className="border-valorant-cyan text-valorant-cyan hover:bg-valorant-cyan hover:text-black"
-                  onClick={() => window.open(account.accountLink, "_blank")}
+                  disabled={isOwner}
+                  className="border-valorant-cyan text-valorant-cyan hover:bg-valorant-cyan hover:text-black disabled:opacity-40 disabled:cursor-not-allowed"
+                  onClick={() => !isOwner && window.open(account.accountLink, "_blank")}
                 >
                   View Profile
                 </Button>
-                <Button className="valorant-gradient hover:opacity-90">
-                  Buy Now
-                </Button>
+                {!isOwner && (
+                  <Button className="valorant-gradient hover:opacity-90">
+                    Buy Now
+                  </Button>
+                )}
               </div>
             </div>
           </div>
@@ -288,7 +312,7 @@ export default function AccountDetails() {
                         <Button
                           onClick={handleCommentSubmit}
                           className="valorant-gradient hover:opacity-90"
-                          disabled={!newComment.trim()}
+                          disabled={!newComment.trim() || submitComment.isPending || !session}
                         >
                           <Send className="w-4 h-4" />
                         </Button>
@@ -315,17 +339,13 @@ export default function AccountDetails() {
                                 <div className="flex items-center gap-2 mb-1">
                                   <p className="font-semibold text-white">{comment.authorName}</p>
                                   <p className="text-xs text-gray-400">
-                                    {comment.createdAt.toLocaleDateString()}
+                                    {new Date(comment.createdDate).toLocaleDateString()}
                                   </p>
+                                  {comment.isEdited && (
+                                    <p className="text-xs text-gray-500">(edited)</p>
+                                  )}
                                 </div>
                                 <p className="text-gray-300">{comment.content}</p>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  className="mt-2 text-valorant-cyan hover:text-valorant-gold hover:bg-transparent text-xs"
-                                >
-                                  Reply
-                                </Button>
                               </div>
                             </div>
                           </CardContent>
@@ -356,43 +376,10 @@ export default function AccountDetails() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  {notifications.length > 0 ? (
-                    <div className="space-y-3 max-h-96 overflow-y-auto">
-                      {notifications
-                        .sort(
-                          (a, b) =>
-                            new Date(b.timestamp).getTime() -
-                            new Date(a.timestamp).getTime()
-                        )
-                        .map((notification) => (
-                          <div
-                            key={notification.id}
-                            className="border-l-2 border-valorant-cyan/50 pl-3 py-2 hover:border-valorant-cyan transition-colors"
-                          >
-                            <div className="flex items-start gap-2">
-                              <div className="w-2 h-2 rounded-full bg-valorant-cyan mt-1.5 flex-shrink-0" />
-                              <div className="flex-1">
-                                <p className="text-sm text-white font-medium">
-                                  {notification.message}
-                                </p>
-                                <p className="text-xs text-gray-400 mt-1">
-                                  {notification.timestamp.toLocaleDateString()}{" "}
-                                  {notification.timestamp.toLocaleTimeString([], {
-                                    hour: "2-digit",
-                                    minute: "2-digit",
-                                  })}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                    </div>
-                  ) : (
-                    <div className="text-center py-8">
-                      <Bell className="w-8 h-8 text-gray-500 mx-auto mb-2" />
-                      <p className="text-gray-400 text-sm">No notifications yet</p>
-                    </div>
-                  )}
+                  <div className="text-center py-8">
+                    <Bell className="w-8 h-8 text-gray-500 mx-auto mb-2" />
+                    <p className="text-gray-400 text-sm">No notifications yet</p>
+                  </div>
                 </CardContent>
               </Card>
 

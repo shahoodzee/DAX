@@ -112,7 +112,7 @@ export default function SignUp() {
           <form onSubmit={onSignUp} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="firstName">First name</Label>
+                <Label htmlFor="firstName" className="text-white">First name</Label>
                 <div className="relative">
                   <User
                     className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
@@ -129,7 +129,7 @@ export default function SignUp() {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="lastName">Last name</Label>
+                <Label htmlFor="lastName" className="text-white">Last name</Label>
                 <div className="relative">
                   <User
                     className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
@@ -148,7 +148,7 @@ export default function SignUp() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="username">Preferred username (optional)</Label>
+              <Label htmlFor="username" className="text-white">Preferred username (optional)</Label>
               <div className="relative">
                 <AtSign
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
@@ -165,7 +165,7 @@ export default function SignUp() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-white">Email</Label>
               <div className="relative">
                 <Mail
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
@@ -184,7 +184,7 @@ export default function SignUp() {
             </div>
 
             <div className="space-y-2">
-              <Label>Phone</Label>
+              <Label className="text-white">Phone</Label>
               <div className="grid grid-cols-3 gap-2">
                 <div>
                   <CountryCodeSelect
@@ -209,7 +209,7 @@ export default function SignUp() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="dob">Date of birth</Label>
+              <Label htmlFor="dob" className="text-white">Date of birth</Label>
               <div className="relative">
                 <Calendar
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
@@ -227,7 +227,7 @@ export default function SignUp() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="country">Country</Label>
+              <Label htmlFor="country" className="text-white">Country</Label>
               <div className="relative">
                 <Globe
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
@@ -245,7 +245,7 @@ export default function SignUp() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password" className="text-white">Password</Label>
                 <div className="relative">
                   <Lock
                     className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
@@ -263,7 +263,7 @@ export default function SignUp() {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="confirm">Confirm Password</Label>
+                <Label htmlFor="confirm" className="text-white">Confirm Password</Label>
                 <div className="relative">
                   <ShieldCheck
                     className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"

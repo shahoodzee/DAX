@@ -90,7 +90,7 @@ export default function Marketplace() {
         <Navbar onMenuClick={() => setMobileMenuOpen(!mobileMenuOpen)} />
         <main className="p-6">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold mb-2 text-valorant-cyan">Marketplace</h1>
+            <h1 className="text-3xl font-bold mb-2 text-white">Marketplace</h1>
             <p className="text-gray-400">Browse and purchase game accounts</p>
           </div>
 
