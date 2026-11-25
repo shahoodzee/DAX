@@ -1,10 +1,13 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { sampleAccounts } from "@/data/sampleData";
 import { Save } from "lucide-react";
+import { useUser } from "@/lib/auth";
+import { supabase } from "@/lib/supabaseClient";
+import { toast } from "@/hooks/use-toast";
 
 interface UserProfile {
   firstName: string;
@@ -17,18 +20,37 @@ interface UserProfile {
 }
 
 export default function Profile() {
+  const user = useUser();
   const [profile, setProfile] = useState<UserProfile>({
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@example.com",
-    username: "johndoe",
-    phone: "+1 (555) 123-4567",
-    country: "United States",
-    bio: "Gaming enthusiast and account collector",
+    firstName: "",
+    lastName: "",
+    email: "",
+    username: "",
+    phone: "",
+    country: "",
+    bio: "",
   });
+
+  useEffect(() => {
+    if (!user) return;
+    const m = user.user_metadata ?? {};
+    setProfile({
+      firstName: m.first_name ?? "",
+      lastName: m.last_name ?? "",
+      email: user.email ?? "",
+      username: m.username ?? "",
+      phone: m.phone ?? user.phone ?? "",
+      country: m.country ?? "",
+      bio: m.bio ?? "",
+    });
+  }, [user]);
 
   const [isEditing, setIsEditing] = useState(false);
   const [tempProfile, setTempProfile] = useState<UserProfile>(profile);
+
+  useEffect(() => {
+    if (!isEditing) setTempProfile(profile);
+  }, [profile]);
 
   const stats = useMemo(() => {
     const totalListings = sampleAccounts.length;
@@ -46,7 +68,22 @@ export default function Profile() {
     }));
   };
 
-  const handleSaveChanges = () => {
+  const handleSaveChanges = async () => {
+    const { error } = await supabase.auth.updateUser({
+      data: {
+        first_name: tempProfile.firstName,
+        last_name: tempProfile.lastName,
+        username: tempProfile.username,
+        phone: tempProfile.phone,
+        country: tempProfile.country,
+        bio: tempProfile.bio,
+        full_name: `${tempProfile.firstName} ${tempProfile.lastName}`.trim(),
+      },
+    });
+    if (error) {
+      toast({ title: "Save failed", description: error.message, variant: "destructive" });
+      return;
+    }
     setProfile(tempProfile);
     setIsEditing(false);
   };

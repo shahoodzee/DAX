@@ -137,7 +137,7 @@ export default function MyListings() {
     setTimeout(() => {
       loadMoreAccounts(1, new Set(), filteredAccounts, true);
     }, 0);
-  }, [searchTerm, filters]);
+  }, [searchTerm, filters, accounts]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(

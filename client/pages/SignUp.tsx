@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
+import { createUser } from "@/lib/api";
 import {
   Card,
   CardHeader,
@@ -24,6 +25,7 @@ import {
   User,
   AtSign,
   Phone,
+  Globe,
 } from "lucide-react";
 
 import CountryCodeSelect from "@/components/CountryCodeSelect";
@@ -37,6 +39,7 @@ export default function SignUp() {
   const [phoneCode, setPhoneCode] = useState("+1");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [dob, setDob] = useState("");
+  const [country, setCountry] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [loading, setLoading] = useState(false);
@@ -49,7 +52,19 @@ export default function SignUp() {
     }
     setLoading(true);
     try {
-const { error } = await supabase.auth.signUp({
+      const backendRes = await createUser({
+        firstName,
+        lastName,
+        email,
+        password,
+        dob,
+        phoneNumber: phoneNumber ? `${phoneCode} ${phoneNumber}` : undefined,
+        userName: username || undefined,
+        country: country || undefined,
+      });
+      if (!backendRes.success) throw new Error(backendRes.message ?? "Registration failed");
+
+      const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -63,6 +78,7 @@ const { error } = await supabase.auth.signUp({
         },
       });
       if (error) throw error;
+
       toast({ title: "Account created", description: "Welcome aboard!" });
       navigate("/");
     } catch (err: any) {
@@ -205,6 +221,23 @@ const { error } = await supabase.auth.signUp({
                   required
                   value={dob}
                   onChange={(e) => setDob(e.target.value)}
+                  className="pl-10 bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="country">Country</Label>
+              <div className="relative">
+                <Globe
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  size={18}
+                />
+                <Input
+                  id="country"
+                  placeholder="e.g., Pakistan"
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
                   className="pl-10 bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
                 />
               </div>

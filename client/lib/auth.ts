@@ -1,13 +1,17 @@
-export interface CurrentUser {
-  id: string;
-  name: string;
-  email: string;
-}
+import { useState, useEffect } from "react";
+import type { User } from "@supabase/supabase-js";
+import { supabase } from "./supabaseClient";
 
-export function getCurrentUser(): CurrentUser {
-  return {
-    id: "user-1",
-    name: "Jhon Doe",
-    email: "jhon@example.com",
-  };
+export function useUser() {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setUser(data.user));
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  return user;
 }

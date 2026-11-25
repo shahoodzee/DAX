@@ -30,6 +30,8 @@ import {
 } from "@/components/ui/form";
 import { toast } from "@/hooks/use-toast";
 import { Plus } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { createListing } from "@/lib/api";
 
 const accountTypes = [
   { label: "Valorant", value: "Valorant" },
@@ -133,6 +135,8 @@ function useCountries() {
 
 export default function CreateAccountModal() {
   const [open, setOpen] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const { session } = useAuth();
   const countries = useCountries();
 
   const form = useForm<FormValues>({
@@ -178,12 +182,44 @@ export default function CreateAccountModal() {
     }
   }, [accountCurrencyOptions, form]);
 
-  const onSubmit = (values: FormValues) => {
-    toast({
-      title: "Account listed",
-      description: `${values.accountName} • ${values.accountType} • ${values.sellingPrice} ${values.sellingPriceCurrency}`,
-    });
-    setOpen(false);
+  const onSubmit = async (values: FormValues) => {
+    if (!session?.access_token) {
+      toast({ title: "Not authenticated", variant: "destructive" });
+      return;
+    }
+    setSubmitting(true);
+    try {
+      await createListing(session.access_token, {
+        accountName: values.accountName,
+        accountType: values.accountType,
+        region: values.region,
+        moneySpent: 0,
+        gameMoneySpent: values.currencySpent,
+        gameCurrency: values.accountCurrency,
+        numberOfSkins: 0,
+        accountLink: "",
+        level: values.accountLevel ? Number(values.accountLevel) : undefined,
+        price: values.sellingPrice,
+        sellingPriceCurrency: values.sellingPriceCurrency,
+        featured: false,
+        images: [],
+        skins: [],
+      });
+      toast({
+        title: "Account listed",
+        description: `${values.accountName} • ${values.accountType} • ${values.sellingPrice} ${values.sellingPriceCurrency}`,
+      });
+      form.reset();
+      setOpen(false);
+    } catch (err: unknown) {
+      toast({
+        title: "Failed to create listing",
+        description: err instanceof Error ? err.message : "Unknown error",
+        variant: "destructive",
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -444,9 +480,10 @@ export default function CreateAccountModal() {
               </Button>
               <Button
                 type="submit"
+                disabled={submitting}
                 className="bg-valorant-red hover:bg-valorant-red/80 text-white"
               >
-                Create
+                {submitting ? "Creating..." : "Create"}
               </Button>
             </DialogFooter>
           </form>

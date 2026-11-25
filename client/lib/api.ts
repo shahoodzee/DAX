@@ -86,6 +86,60 @@ export function fetchGameAccount(id: string) {
   return apiFetch<ApiResponse<ApiGameAccount>>(`/api/GameAccounts/${id}`);
 }
 
+export interface CreateGameAccountPayload {
+  accountName: string;
+  accountType: string;
+  region: string;
+  moneySpent: number;
+  gameMoneySpent: number;
+  gameCurrency: string;
+  numberOfSkins: number;
+  accountLink: string;
+  rank?: string;
+  level?: number;
+  price: number;
+  sellingPriceCurrency: string;
+  featured: boolean;
+  description?: string;
+  images?: string[];
+  skins?: unknown[];
+}
+
+export function createListing(token: string, payload: CreateGameAccountPayload) {
+  return apiFetch<ApiResponse<ApiGameAccount>>("/api/GameAccounts", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body: JSON.stringify(payload),
+  });
+}
+
+export interface CreateUserPayload {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  dob: string;
+  phoneNumber?: string;
+  userName?: string;
+  country?: string;
+}
+
+export function createUser(payload: CreateUserPayload) {
+  return apiFetch<ApiResponse<{ created: boolean; userId: number }>>("/api/Users/create", {
+    method: "POST",
+    body: JSON.stringify({
+      firstName: payload.firstName,
+      lastName: payload.lastName,
+      email: payload.email,
+      password: payload.password,
+      dob: payload.dob,
+      phoneNumber: payload.phoneNumber,
+      userName: payload.userName,
+      country: payload.country,
+    }),
+  });
+}
+
 export function fetchMyListings(token: string, page = 1, pageSize = 100) {
   return apiFetch<ApiResponse<PagedGameAccountsResponse>>(
     `/api/GameAccounts/my-listings?page=${page}&pageSize=${pageSize}`,

@@ -8,6 +8,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Bell, User, Menu, Settings, LogOut, UserCircle } from "lucide-react";
+import { useUser } from "@/lib/auth";
+import { supabase } from "@/lib/supabaseClient";
 
 interface NavbarProps {
   onMenuClick?: () => void;
@@ -19,6 +21,13 @@ export default function Navbar({
   showMenuButton = true,
 }: NavbarProps) {
   const navigate = useNavigate();
+  const user = useUser();
+  const displayName = user?.user_metadata?.full_name ?? user?.email ?? "Account";
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/login");
+  };
 
   return (
     <nav className="bg-gray-900/50 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-30">
@@ -54,7 +63,7 @@ export default function Navbar({
                   className="border-gray-500 bg-transparent text-white-700 hover:bg-gray-400 hover:text-white"
                 >
                   <User className="w-4 h-4" />
-                  Jhon Doe 
+                  {displayName}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent
@@ -83,7 +92,7 @@ export default function Navbar({
                   Settings
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="bg-gray-700" />
-                <DropdownMenuItem className="hover:bg-gray-700 focus:bg-gray-700 cursor-pointer text-red-400 hover:text-red-300">
+                <DropdownMenuItem onClick={handleLogout} className="hover:bg-gray-700 focus:bg-gray-700 cursor-pointer text-red-400 hover:text-red-300">
                   <LogOut className="w-4 h-4 mr-2" />
                   Logout
                 </DropdownMenuItem>
